@@ -1,6 +1,6 @@
 # libappindicator-rs
 
-[![Build Status](https://travis-ci.org/qdot/libappindicator-rs.svg?branch=master)](https://travis-ci.org/qdot/libappindicator-rs) [![Crates.io](https://img.shields.io/crates/v/libappindicator-rs.svg)](https://crates.io/crates/libappindicator-rs)
+[![Build Status](https://travis-ci.org/qdot/libappindicator-rs.svg?branch=master)](https://travis-ci.org/qdot/libappindicator-rs) [![Crates.io](https://img.shields.io/crates/v/libappindicator.svg)](https://crates.io/crates/libappindicator)
 
 Rust safe bindings for the libappindicator library. libappindicator
 provides cross-distribution/window system functions for creating
