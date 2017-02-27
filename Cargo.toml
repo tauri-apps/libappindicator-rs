@@ -3,11 +3,14 @@ name = "libappindicator"
 version = "0.1.0"
 authors = ["Kyle Machulis <kyle@nonpolynomial.com>"]
 description = "Rust safe bindings for libappindicator"
-license = "LGPL-2.1, LGPL-3"
+license = "LGPL-2.1/LGPL-3.0"
 homepage = "http://github.com/qdot/libappindicator-rs"
 repository = "https://github.com/qdot/libappindicator-rs.git"
 readme = "README.md"
 keywords = ["linux", "gui", "gtk"]
+
+[badges]
+travis-ci = { repository = "qdot/libappindicator-rs" }
 
 [dependencies]
 log="0.3"
