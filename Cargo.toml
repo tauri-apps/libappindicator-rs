@@ -14,7 +14,7 @@ travis-ci = { repository = "qdot/libappindicator-rs" }
 
 [dependencies]
 log="0.3"
-glib="0.1"
-gtk="0.1"
-gtk-sys="0.3"
+glib="0.3"
+gtk="0.2"
+gtk-sys="0.4"
 libappindicator-sys="0.1"
