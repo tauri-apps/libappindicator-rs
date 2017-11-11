@@ -3,6 +3,7 @@ extern crate gtk;
 extern crate libappindicator;
 
 use gtk::{WidgetExt, MenuShellExt, MenuItemExt};
+use std::ffi::CStr;
 use libappindicator::{AppIndicator, AppIndicatorStatus};
 
 fn main() {
@@ -11,7 +12,8 @@ fn main() {
     indicator.set_status(AppIndicatorStatus::APP_INDICATOR_STATUS_ACTIVE);
     indicator.set_icon_full("/usr/share/gxkb/flags/ua.png", "icon");
     let mut m = gtk::Menu::new();
-    let mi = gtk::ImageMenuItem::new_from_stock(gtk_sys::GTK_STOCK_QUIT, None);
+    let quit: &CStr = unsafe { CStr::from_ptr(gtk_sys::GTK_STOCK_QUIT) };
+    let mi = gtk::ImageMenuItem::new_from_stock(quit.to_str().unwrap(), None);
     mi.connect_activate(|_| {
         gtk::main_quit();
     });
