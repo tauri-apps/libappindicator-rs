@@ -40,6 +40,12 @@ impl AppIndicator {
         }
     }
 
+    pub fn set_title(&mut self, title: &str) {
+        unsafe {
+            app_indicator_set_title(self.air, title.to_glib_none().0);
+        }
+    }
+
     pub fn set_icon_full(&mut self, name: &str, desc: &str) {
         unsafe {
             app_indicator_set_icon_full(self.air, name.to_glib_none().0, desc.to_glib_none().0);
