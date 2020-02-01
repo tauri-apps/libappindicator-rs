@@ -18,3 +18,7 @@ glib= "0.9.1"
 gtk= "0.8.0"
 gtk-sys= "0.9.2"
 libappindicator-sys= "0.4.0"
+
+[[example]]
+name="example1"
+path="examples/libappindicator-example.rs"

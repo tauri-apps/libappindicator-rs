@@ -10,21 +10,32 @@ use glib::translate::{ToGlibPtr};
 pub struct AppIndicator {
     air: *mut AppIndicatorRaw
 }
-
+pub enum AppIndicatorCategory{
+    ApplicationStatus = 0,
+    Communications = 1,
+    SystemServices = 2,
+    Hardware = 3,
+    Other = 4
+}
+pub enum AppIndicatorStatus{
+    Passive = 0,
+    Active = 1,
+    Attention = 2
+}
 impl AppIndicator {
     pub fn new(title: &str, icon: &str) -> AppIndicator {
         AppIndicator {
             air: unsafe {
                 app_indicator_new(title.to_glib_none().0,
                                   icon.to_glib_none().0,
-                                  AppIndicatorCategory_APP_INDICATOR_CATEGORY_APPLICATION_STATUS)
+                                  AppIndicatorCategory::ApplicationStatus as u32)
             }
         }
     }
 
     pub fn set_status(&mut self, status: AppIndicatorStatus) {
         unsafe {
-            app_indicator_set_status(self.air, status);
+            app_indicator_set_status(self.air, status as u32);
         }
     }
 
