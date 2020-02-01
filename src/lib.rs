@@ -17,7 +17,7 @@ impl AppIndicator {
             air: unsafe {
                 app_indicator_new(title.to_glib_none().0,
                                   icon.to_glib_none().0,
-                                  AppIndicatorCategory::APP_INDICATOR_CATEGORY_APPLICATION_STATUS)
+                                  AppIndicatorCategory_APP_INDICATOR_CATEGORY_APPLICATION_STATUS)
             }
         }
     }
