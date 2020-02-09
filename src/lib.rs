@@ -57,9 +57,21 @@ impl AppIndicator {
         }
     }
 
+    pub fn set_icon(&mut self, name: &str) {
+        unsafe {
+            app_indicator_set_icon(self.air, name.to_glib_none().0);
+        }
+    }
+
     pub fn set_icon_full(&mut self, name: &str, desc: &str) {
         unsafe {
             app_indicator_set_icon_full(self.air, name.to_glib_none().0, desc.to_glib_none().0);
+        }
+    }
+
+    pub fn set_attention_icon(&mut self, name: &str) {
+        unsafe {
+            app_indicator_set_attention_icon(self.air, name.to_glib_none().0);
         }
     }
 
