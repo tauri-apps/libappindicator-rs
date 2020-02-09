@@ -1,6 +1,7 @@
 extern crate gtk;
 extern crate libappindicator;
 use std::env;
+use std::path::Path;
 
 use gtk::prelude::*;
 use libappindicator::{AppIndicator, AppIndicatorStatus};
@@ -9,9 +10,9 @@ fn main() {
     gtk::init().unwrap();
     let mut indicator = AppIndicator::new("libappindicator test application", "");
     indicator.set_status(AppIndicatorStatus::Active);
-    let mut path = env::current_dir().expect("");
-    path.push("./examples/rust-logo-64x64-blk.png");
-    indicator.set_icon_full(path.to_str().unwrap(), "icon");
+    let icon_path = Path::new(env!("CARGO_MANIFEST_DIR")).join("examples");
+    indicator.set_icon_theme_path(icon_path.to_str().unwrap());
+    indicator.set_icon_full("rust-logo-64x64-blk", "icon");
     let mut m = gtk::Menu::new();
     let mi = gtk::CheckMenuItem::new_with_label("Hello RUST");
     mi.connect_activate(|_| {
