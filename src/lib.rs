@@ -33,6 +33,17 @@ impl AppIndicator {
         }
     }
 
+    pub fn with_path(title: &str, icon: &str, theme_path: &str) -> AppIndicator {
+        AppIndicator {
+            air: unsafe {
+                app_indicator_new_with_path(title.to_glib_none().0,
+                                            icon.to_glib_none().0,
+                                            AppIndicatorCategory::ApplicationStatus as u32,
+                                            theme_path.to_glib_none().0)
+            }
+        }
+    }
+
     pub fn set_status(&mut self, status: AppIndicatorStatus) {
         unsafe {
             app_indicator_set_status(self.air, status as u32);
@@ -54,6 +65,12 @@ impl AppIndicator {
     pub fn set_title(&mut self, title: &str) {
         unsafe {
             app_indicator_set_title(self.air, title.to_glib_none().0);
+        }
+    }
+
+    pub fn set_icon_theme_path(&mut self, path: &str) {
+        unsafe {
+            app_indicator_set_icon_theme_path(self.air, path.to_glib_none().0);
         }
     }
 
