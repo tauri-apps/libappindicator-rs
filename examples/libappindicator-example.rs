@@ -14,7 +14,7 @@ fn main() {
     indicator.set_icon_theme_path(icon_path.to_str().unwrap());
     indicator.set_icon_full("rust-logo-64x64-blk", "icon");
     let mut m = gtk::Menu::new();
-    let mi = gtk::CheckMenuItem::new_with_label("Hello RUST");
+    let mi = gtk::CheckMenuItem::with_label("Hello RUST");
     mi.connect_activate(|_| {
         gtk::main_quit();
     });
