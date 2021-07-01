@@ -13,10 +13,10 @@ keywords = ["linux", "gui", "gtk"]
 travis-ci = { repository = "qdot/libappindicator-rs" }
 
 [dependencies]
-log= "0.4.8"
-glib= { git = "https://github.com/gtk-rs/gtk-rs-core.git", package = "glib" }
-gtk= { git = "https://github.com/gtk-rs/gtk3-rs.git", package = "gtk" }
-gtk-sys= { git = "https://github.com/gtk-rs/gtk3-rs.git", package = "gtk-sys" }
+log = "0.4.14"
+glib= "^0.14.0"
+gtk= "^0.14.0"
+gtk-sys= "^0.14.0"
 libappindicator-sys= { git = "https://github.com/ttys3/libappindicator-sys.git" }
 
 [[example]]
