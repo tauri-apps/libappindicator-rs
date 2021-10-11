@@ -1,6 +1,6 @@
 [package]
 name = "libappindicator"
-version = "0.6.0"
+version = "0.5.2"
 description = "Rust safe bindings for libappindicator"
 edition = "2018"
 license = "MIT"
