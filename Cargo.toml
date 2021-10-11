@@ -1,24 +1,15 @@
 [package]
 name = "libappindicator"
-version = "0.5.2"
-authors = ["Kyle Machulis <kyle@nonpolynomial.com>"]
+version = "0.6.0"
 description = "Rust safe bindings for libappindicator"
-license = "LGPL-2.1/LGPL-3.0"
-homepage = "http://github.com/qdot/libappindicator-rs"
-repository = "https://github.com/qdot/libappindicator-rs.git"
-readme = "README.md"
+edition = "2018"
+license = "MIT"
 keywords = ["linux", "gui", "gtk"]
 
-[badges]
-travis-ci = { repository = "qdot/libappindicator-rs" }
-
 [dependencies]
-log= "0.4.8"
-glib= "0.10.1"
-gtk= "0.9.0"
-gtk-sys= "0.10.0"
-libappindicator-sys= "0.5.0"
+log= "0.4"
+glib= "0.14"
+gtk= "0.14"
+gtk-sys= "0.14"
+libappindicator-sys = { version = "0.6", path = "sys/" }
 
-[[example]]
-name="example1"
-path="examples/libappindicator-example.rs"

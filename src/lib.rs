@@ -1,46 +1,45 @@
-extern crate libappindicator_sys;
-extern crate glib;
-extern crate gtk;
-extern crate gtk_sys;
-
+use glib::translate::ToGlibPtr;
+use libappindicator_sys::AppIndicator as AppIndicatorRaw;
 pub use libappindicator_sys::*;
-use libappindicator_sys::{AppIndicator as AppIndicatorRaw};
-use glib::translate::{ToGlibPtr};
 
 pub struct AppIndicator {
-    air: *mut AppIndicatorRaw
+    air: *mut AppIndicatorRaw,
 }
-pub enum AppIndicatorCategory{
+pub enum AppIndicatorCategory {
     ApplicationStatus = 0,
     Communications = 1,
     SystemServices = 2,
     Hardware = 3,
-    Other = 4
+    Other = 4,
 }
-pub enum AppIndicatorStatus{
+pub enum AppIndicatorStatus {
     Passive = 0,
     Active = 1,
-    Attention = 2
+    Attention = 2,
 }
 impl AppIndicator {
     pub fn new(title: &str, icon: &str) -> AppIndicator {
         AppIndicator {
             air: unsafe {
-                app_indicator_new(title.to_glib_none().0,
-                                  icon.to_glib_none().0,
-                                  AppIndicatorCategory::ApplicationStatus as u32)
-            }
+                app_indicator_new(
+                    title.to_glib_none().0,
+                    icon.to_glib_none().0,
+                    AppIndicatorCategory::ApplicationStatus as u32,
+                )
+            },
         }
     }
 
     pub fn with_path(title: &str, icon: &str, theme_path: &str) -> AppIndicator {
         AppIndicator {
             air: unsafe {
-                app_indicator_new_with_path(title.to_glib_none().0,
-                                            icon.to_glib_none().0,
-                                            AppIndicatorCategory::ApplicationStatus as u32,
-                                            theme_path.to_glib_none().0)
-            }
+                app_indicator_new_with_path(
+                    title.to_glib_none().0,
+                    icon.to_glib_none().0,
+                    AppIndicatorCategory::ApplicationStatus as u32,
+                    theme_path.to_glib_none().0,
+                )
+            },
         }
     }
 
@@ -93,14 +92,11 @@ impl AppIndicator {
 
     pub fn set_attention_icon_full(&mut self, name: &str, desc: &str) {
         unsafe {
-            app_indicator_set_attention_icon_full(self.air, name.to_glib_none().0, desc.to_glib_none().0);
+            app_indicator_set_attention_icon_full(
+                self.air,
+                name.to_glib_none().0,
+                desc.to_glib_none().0,
+            );
         }
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
     }
 }

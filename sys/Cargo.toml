@@ -1,0 +1,16 @@
+[package]
+name = "libappindicator-sys"
+version = "0.6.0"
+description = "Rust sys bindings for libappindicator"
+license = "MIT"
+keywords = ["linux", "gui"]
+build = "build.rs"
+edition = "2018"
+categories = ["external-ffi-bindings"]
+
+[dependencies]
+gtk-sys = "0.14"
+
+[build-dependencies]
+pkg-config = "0.3"
+
