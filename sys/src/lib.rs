@@ -1552,4 +1552,3 @@ extern "C" {
         desktop_profile: *const gchar,
     );
 }
-
