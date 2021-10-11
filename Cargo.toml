@@ -11,5 +11,5 @@ log= "0.4"
 glib= "0.14"
 gtk= "0.14"
 gtk-sys= "0.14"
-libappindicator-sys = { version = "0.5", path = "sys/" }
+libappindicator-sys = { version = "0.6", path = "sys/" }
 
