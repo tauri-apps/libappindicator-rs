@@ -1,15 +1,14 @@
 [package]
 name = "libappindicator"
-version = "0.5.2"
+version = "0.6.0"
 description = "Rust safe bindings for libappindicator"
 edition = "2018"
 license = "MIT"
-keywords = ["linux", "gui", "gtk"]
+keywords = [ "linux", "gui", "gtk" ]
 
 [dependencies]
-log= "0.4"
-glib= "0.14"
-gtk= "0.14"
-gtk-sys= "0.14"
+log = "0.4"
+glib = "0.14"
+gtk = "0.14"
+gtk-sys = "0.14"
 libappindicator-sys = { version = "0.6", path = "sys/" }
-
