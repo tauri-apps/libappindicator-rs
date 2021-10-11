@@ -21,6 +21,12 @@ jobs:
           toolchain: stable
           target: ${{ matrix.platform.target }}
 
+      - name: install gtk
+        if: matrix.platform.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev libappindicator3-dev
+
       - name: Get current date
         run: echo "CURRENT_DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
 

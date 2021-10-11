@@ -1,6 +1,6 @@
 [package]
 name = "libappindicator-sys"
-version = "0.6.0"
+version = "0.5.0"
 description = "Rust sys bindings for libappindicator"
 license = "MIT"
 keywords = ["linux", "gui"]
