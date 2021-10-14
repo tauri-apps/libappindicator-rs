@@ -3,8 +3,8 @@
 #![allow(non_snake_case)]
 
 use gtk_sys::{
-    GtkContainer, GtkContainerPrivate, GtkMenu, GtkMenuPrivate, GtkMenuShell, GtkMenuShellPrivate,
-    GtkStatusIcon, GtkStatusIconPrivate, GtkWidget, GtkWidgetPrivate,
+  GtkContainer, GtkContainerPrivate, GtkMenu, GtkMenuPrivate, GtkMenuShell, GtkMenuShellPrivate,
+  GtkStatusIcon, GtkStatusIconPrivate, GtkWidget, GtkWidgetPrivate,
 };
 
 use std::os::raw::*;
@@ -25,48 +25,48 @@ pub type gpointer = *mut c_void;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _GData {
-    _unused: [u8; 0],
+  _unused: [u8; 0],
 }
 pub type GData = _GData;
 pub type GSList = _GSList;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _GSList {
-    pub data: gpointer,
-    pub next: *mut GSList,
+  pub data: gpointer,
+  pub next: *mut GSList,
 }
 #[test]
 fn bindgen_test_layout__GSList() {
-    assert_eq!(
-        ::std::mem::size_of::<_GSList>(),
-        16usize,
-        concat!("Size of: ", stringify!(_GSList))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_GSList>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_GSList))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GSList>())).data as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GSList),
-            "::",
-            stringify!(data)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GSList>())).next as *const _ as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GSList),
-            "::",
-            stringify!(next)
-        )
-    );
+  assert_eq!(
+    ::std::mem::size_of::<_GSList>(),
+    16usize,
+    concat!("Size of: ", stringify!(_GSList))
+  );
+  assert_eq!(
+    ::std::mem::align_of::<_GSList>(),
+    8usize,
+    concat!("Alignment of ", stringify!(_GSList))
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GSList>())).data as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GSList),
+      "::",
+      stringify!(data)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GSList>())).next as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GSList),
+      "::",
+      stringify!(next)
+    )
+  );
 }
 pub type GType = gsize;
 pub type GValue = _GValue;
@@ -78,30 +78,30 @@ pub type GTypeInstance = _GTypeInstance;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _GTypeClass {
-    pub g_type: GType,
+  pub g_type: GType,
 }
 #[test]
 fn bindgen_test_layout__GTypeClass() {
-    assert_eq!(
-        ::std::mem::size_of::<_GTypeClass>(),
-        8usize,
-        concat!("Size of: ", stringify!(_GTypeClass))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_GTypeClass>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_GTypeClass))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GTypeClass>())).g_type as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GTypeClass),
-            "::",
-            stringify!(g_type)
-        )
-    );
+  assert_eq!(
+    ::std::mem::size_of::<_GTypeClass>(),
+    8usize,
+    concat!("Size of: ", stringify!(_GTypeClass))
+  );
+  assert_eq!(
+    ::std::mem::align_of::<_GTypeClass>(),
+    8usize,
+    concat!("Alignment of ", stringify!(_GTypeClass))
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GTypeClass>())).g_type as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GTypeClass),
+      "::",
+      stringify!(g_type)
+    )
+  );
 }
 #[doc = " GTypeInstance:"]
 #[doc = ""]
@@ -109,30 +109,30 @@ fn bindgen_test_layout__GTypeClass() {
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _GTypeInstance {
-    pub g_class: *mut GTypeClass,
+  pub g_class: *mut GTypeClass,
 }
 #[test]
 fn bindgen_test_layout__GTypeInstance() {
-    assert_eq!(
-        ::std::mem::size_of::<_GTypeInstance>(),
-        8usize,
-        concat!("Size of: ", stringify!(_GTypeInstance))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_GTypeInstance>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_GTypeInstance))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GTypeInstance>())).g_class as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GTypeInstance),
-            "::",
-            stringify!(g_class)
-        )
-    );
+  assert_eq!(
+    ::std::mem::size_of::<_GTypeInstance>(),
+    8usize,
+    concat!("Size of: ", stringify!(_GTypeInstance))
+  );
+  assert_eq!(
+    ::std::mem::align_of::<_GTypeInstance>(),
+    8usize,
+    concat!("Alignment of ", stringify!(_GTypeInstance))
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GTypeInstance>())).g_class as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GTypeInstance),
+      "::",
+      stringify!(g_class)
+    )
+  );
 }
 #[doc = " GValue:"]
 #[doc = ""]
@@ -147,158 +147,158 @@ fn bindgen_test_layout__GTypeInstance() {
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct _GValue {
-    pub g_type: GType,
-    pub data: [_GValue__bindgen_ty_1; 2usize],
+  pub g_type: GType,
+  pub data: [_GValue__bindgen_ty_1; 2usize],
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub union _GValue__bindgen_ty_1 {
-    pub v_int: gint,
-    pub v_uint: guint,
-    pub v_long: glong,
-    pub v_ulong: gulong,
-    pub v_int64: gint64,
-    pub v_uint64: guint64,
-    pub v_float: gfloat,
-    pub v_double: gdouble,
-    pub v_pointer: gpointer,
-    _bindgen_union_align: u64,
+  pub v_int: gint,
+  pub v_uint: guint,
+  pub v_long: glong,
+  pub v_ulong: gulong,
+  pub v_int64: gint64,
+  pub v_uint64: guint64,
+  pub v_float: gfloat,
+  pub v_double: gdouble,
+  pub v_pointer: gpointer,
+  _bindgen_union_align: u64,
 }
 #[test]
 fn bindgen_test_layout__GValue__bindgen_ty_1() {
-    assert_eq!(
-        ::std::mem::size_of::<_GValue__bindgen_ty_1>(),
-        8usize,
-        concat!("Size of: ", stringify!(_GValue__bindgen_ty_1))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_GValue__bindgen_ty_1>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_GValue__bindgen_ty_1))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GValue__bindgen_ty_1>())).v_int as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GValue__bindgen_ty_1),
-            "::",
-            stringify!(v_int)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GValue__bindgen_ty_1>())).v_uint as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GValue__bindgen_ty_1),
-            "::",
-            stringify!(v_uint)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GValue__bindgen_ty_1>())).v_long as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GValue__bindgen_ty_1),
-            "::",
-            stringify!(v_long)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GValue__bindgen_ty_1>())).v_ulong as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GValue__bindgen_ty_1),
-            "::",
-            stringify!(v_ulong)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GValue__bindgen_ty_1>())).v_int64 as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GValue__bindgen_ty_1),
-            "::",
-            stringify!(v_int64)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GValue__bindgen_ty_1>())).v_uint64 as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GValue__bindgen_ty_1),
-            "::",
-            stringify!(v_uint64)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GValue__bindgen_ty_1>())).v_float as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GValue__bindgen_ty_1),
-            "::",
-            stringify!(v_float)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GValue__bindgen_ty_1>())).v_double as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GValue__bindgen_ty_1),
-            "::",
-            stringify!(v_double)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GValue__bindgen_ty_1>())).v_pointer as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GValue__bindgen_ty_1),
-            "::",
-            stringify!(v_pointer)
-        )
-    );
+  assert_eq!(
+    ::std::mem::size_of::<_GValue__bindgen_ty_1>(),
+    8usize,
+    concat!("Size of: ", stringify!(_GValue__bindgen_ty_1))
+  );
+  assert_eq!(
+    ::std::mem::align_of::<_GValue__bindgen_ty_1>(),
+    8usize,
+    concat!("Alignment of ", stringify!(_GValue__bindgen_ty_1))
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GValue__bindgen_ty_1>())).v_int as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GValue__bindgen_ty_1),
+      "::",
+      stringify!(v_int)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GValue__bindgen_ty_1>())).v_uint as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GValue__bindgen_ty_1),
+      "::",
+      stringify!(v_uint)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GValue__bindgen_ty_1>())).v_long as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GValue__bindgen_ty_1),
+      "::",
+      stringify!(v_long)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GValue__bindgen_ty_1>())).v_ulong as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GValue__bindgen_ty_1),
+      "::",
+      stringify!(v_ulong)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GValue__bindgen_ty_1>())).v_int64 as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GValue__bindgen_ty_1),
+      "::",
+      stringify!(v_int64)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GValue__bindgen_ty_1>())).v_uint64 as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GValue__bindgen_ty_1),
+      "::",
+      stringify!(v_uint64)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GValue__bindgen_ty_1>())).v_float as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GValue__bindgen_ty_1),
+      "::",
+      stringify!(v_float)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GValue__bindgen_ty_1>())).v_double as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GValue__bindgen_ty_1),
+      "::",
+      stringify!(v_double)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GValue__bindgen_ty_1>())).v_pointer as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GValue__bindgen_ty_1),
+      "::",
+      stringify!(v_pointer)
+    )
+  );
 }
 #[test]
 fn bindgen_test_layout__GValue() {
-    assert_eq!(
-        ::std::mem::size_of::<_GValue>(),
-        24usize,
-        concat!("Size of: ", stringify!(_GValue))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_GValue>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_GValue))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GValue>())).g_type as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GValue),
-            "::",
-            stringify!(g_type)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GValue>())).data as *const _ as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GValue),
-            "::",
-            stringify!(data)
-        )
-    );
+  assert_eq!(
+    ::std::mem::size_of::<_GValue>(),
+    24usize,
+    concat!("Size of: ", stringify!(_GValue))
+  );
+  assert_eq!(
+    ::std::mem::align_of::<_GValue>(),
+    8usize,
+    concat!("Alignment of ", stringify!(_GValue))
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GValue>())).g_type as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GValue),
+      "::",
+      stringify!(g_type)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GValue>())).data as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GValue),
+      "::",
+      stringify!(data)
+    )
+  );
 }
 pub const GParamFlags_G_PARAM_READABLE: GParamFlags = 1;
 pub const GParamFlags_G_PARAM_WRITABLE: GParamFlags = 2;
@@ -358,129 +358,129 @@ pub type GParamSpec = _GParamSpec;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _GParamSpec {
-    pub g_type_instance: GTypeInstance,
-    pub name: *const gchar,
-    pub flags: GParamFlags,
-    pub value_type: GType,
-    pub owner_type: GType,
-    pub _nick: *mut gchar,
-    pub _blurb: *mut gchar,
-    pub qdata: *mut GData,
-    pub ref_count: guint,
-    pub param_id: guint,
+  pub g_type_instance: GTypeInstance,
+  pub name: *const gchar,
+  pub flags: GParamFlags,
+  pub value_type: GType,
+  pub owner_type: GType,
+  pub _nick: *mut gchar,
+  pub _blurb: *mut gchar,
+  pub qdata: *mut GData,
+  pub ref_count: guint,
+  pub param_id: guint,
 }
 #[test]
 fn bindgen_test_layout__GParamSpec() {
-    assert_eq!(
-        ::std::mem::size_of::<_GParamSpec>(),
-        72usize,
-        concat!("Size of: ", stringify!(_GParamSpec))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_GParamSpec>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_GParamSpec))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GParamSpec>())).g_type_instance as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GParamSpec),
-            "::",
-            stringify!(g_type_instance)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GParamSpec>())).name as *const _ as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GParamSpec),
-            "::",
-            stringify!(name)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GParamSpec>())).flags as *const _ as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GParamSpec),
-            "::",
-            stringify!(flags)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GParamSpec>())).value_type as *const _ as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GParamSpec),
-            "::",
-            stringify!(value_type)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GParamSpec>())).owner_type as *const _ as usize },
-        32usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GParamSpec),
-            "::",
-            stringify!(owner_type)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GParamSpec>()))._nick as *const _ as usize },
-        40usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GParamSpec),
-            "::",
-            stringify!(_nick)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GParamSpec>()))._blurb as *const _ as usize },
-        48usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GParamSpec),
-            "::",
-            stringify!(_blurb)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GParamSpec>())).qdata as *const _ as usize },
-        56usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GParamSpec),
-            "::",
-            stringify!(qdata)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GParamSpec>())).ref_count as *const _ as usize },
-        64usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GParamSpec),
-            "::",
-            stringify!(ref_count)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GParamSpec>())).param_id as *const _ as usize },
-        68usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GParamSpec),
-            "::",
-            stringify!(param_id)
-        )
-    );
+  assert_eq!(
+    ::std::mem::size_of::<_GParamSpec>(),
+    72usize,
+    concat!("Size of: ", stringify!(_GParamSpec))
+  );
+  assert_eq!(
+    ::std::mem::align_of::<_GParamSpec>(),
+    8usize,
+    concat!("Alignment of ", stringify!(_GParamSpec))
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GParamSpec>())).g_type_instance as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GParamSpec),
+      "::",
+      stringify!(g_type_instance)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GParamSpec>())).name as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GParamSpec),
+      "::",
+      stringify!(name)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GParamSpec>())).flags as *const _ as usize },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GParamSpec),
+      "::",
+      stringify!(flags)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GParamSpec>())).value_type as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GParamSpec),
+      "::",
+      stringify!(value_type)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GParamSpec>())).owner_type as *const _ as usize },
+    32usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GParamSpec),
+      "::",
+      stringify!(owner_type)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GParamSpec>()))._nick as *const _ as usize },
+    40usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GParamSpec),
+      "::",
+      stringify!(_nick)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GParamSpec>()))._blurb as *const _ as usize },
+    48usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GParamSpec),
+      "::",
+      stringify!(_blurb)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GParamSpec>())).qdata as *const _ as usize },
+    56usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GParamSpec),
+      "::",
+      stringify!(qdata)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GParamSpec>())).ref_count as *const _ as usize },
+    64usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GParamSpec),
+      "::",
+      stringify!(ref_count)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GParamSpec>())).param_id as *const _ as usize },
+    68usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GParamSpec),
+      "::",
+      stringify!(param_id)
+    )
+  );
 }
 pub type GObject = _GObject;
 pub type GObjectClass = _GObjectClass;
@@ -493,52 +493,52 @@ pub type GObjectConstructParam = _GObjectConstructParam;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _GObject {
-    pub g_type_instance: GTypeInstance,
-    pub ref_count: guint,
-    pub qdata: *mut GData,
+  pub g_type_instance: GTypeInstance,
+  pub ref_count: guint,
+  pub qdata: *mut GData,
 }
 #[test]
 fn bindgen_test_layout__GObject() {
-    assert_eq!(
-        ::std::mem::size_of::<_GObject>(),
-        24usize,
-        concat!("Size of: ", stringify!(_GObject))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_GObject>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_GObject))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GObject>())).g_type_instance as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GObject),
-            "::",
-            stringify!(g_type_instance)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GObject>())).ref_count as *const _ as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GObject),
-            "::",
-            stringify!(ref_count)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GObject>())).qdata as *const _ as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GObject),
-            "::",
-            stringify!(qdata)
-        )
-    );
+  assert_eq!(
+    ::std::mem::size_of::<_GObject>(),
+    24usize,
+    concat!("Size of: ", stringify!(_GObject))
+  );
+  assert_eq!(
+    ::std::mem::align_of::<_GObject>(),
+    8usize,
+    concat!("Alignment of ", stringify!(_GObject))
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GObject>())).g_type_instance as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GObject),
+      "::",
+      stringify!(g_type_instance)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GObject>())).ref_count as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GObject),
+      "::",
+      stringify!(ref_count)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GObject>())).qdata as *const _ as usize },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GObject),
+      "::",
+      stringify!(qdata)
+    )
+  );
 }
 #[doc = " GObjectClass:"]
 #[doc = " @g_type_class: the parent class"]
@@ -603,179 +603,176 @@ fn bindgen_test_layout__GObject() {
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _GObjectClass {
-    pub g_type_class: GTypeClass,
-    pub construct_properties: *mut GSList,
-    pub constructor: ::std::option::Option<
-        unsafe extern "C" fn(
-            type_: GType,
-            n_construct_properties: guint,
-            construct_properties: *mut GObjectConstructParam,
-        ) -> *mut GObject,
-    >,
-    pub set_property: ::std::option::Option<
-        unsafe extern "C" fn(
-            object: *mut GObject,
-            property_id: guint,
-            value: *const GValue,
-            pspec: *mut GParamSpec,
-        ),
-    >,
-    pub get_property: ::std::option::Option<
-        unsafe extern "C" fn(
-            object: *mut GObject,
-            property_id: guint,
-            value: *mut GValue,
-            pspec: *mut GParamSpec,
-        ),
-    >,
-    pub dispose: ::std::option::Option<unsafe extern "C" fn(object: *mut GObject)>,
-    pub finalize: ::std::option::Option<unsafe extern "C" fn(object: *mut GObject)>,
-    pub dispatch_properties_changed: ::std::option::Option<
-        unsafe extern "C" fn(object: *mut GObject, n_pspecs: guint, pspecs: *mut *mut GParamSpec),
-    >,
-    pub notify:
-        ::std::option::Option<unsafe extern "C" fn(object: *mut GObject, pspec: *mut GParamSpec)>,
-    pub constructed: ::std::option::Option<unsafe extern "C" fn(object: *mut GObject)>,
-    pub flags: gsize,
-    pub pdummy: [gpointer; 6usize],
+  pub g_type_class: GTypeClass,
+  pub construct_properties: *mut GSList,
+  pub constructor: ::std::option::Option<
+    unsafe extern "C" fn(
+      type_: GType,
+      n_construct_properties: guint,
+      construct_properties: *mut GObjectConstructParam,
+    ) -> *mut GObject,
+  >,
+  pub set_property: ::std::option::Option<
+    unsafe extern "C" fn(
+      object: *mut GObject,
+      property_id: guint,
+      value: *const GValue,
+      pspec: *mut GParamSpec,
+    ),
+  >,
+  pub get_property: ::std::option::Option<
+    unsafe extern "C" fn(
+      object: *mut GObject,
+      property_id: guint,
+      value: *mut GValue,
+      pspec: *mut GParamSpec,
+    ),
+  >,
+  pub dispose: ::std::option::Option<unsafe extern "C" fn(object: *mut GObject)>,
+  pub finalize: ::std::option::Option<unsafe extern "C" fn(object: *mut GObject)>,
+  pub dispatch_properties_changed: ::std::option::Option<
+    unsafe extern "C" fn(object: *mut GObject, n_pspecs: guint, pspecs: *mut *mut GParamSpec),
+  >,
+  pub notify:
+    ::std::option::Option<unsafe extern "C" fn(object: *mut GObject, pspec: *mut GParamSpec)>,
+  pub constructed: ::std::option::Option<unsafe extern "C" fn(object: *mut GObject)>,
+  pub flags: gsize,
+  pub pdummy: [gpointer; 6usize],
 }
 #[test]
 fn bindgen_test_layout__GObjectClass() {
-    assert_eq!(
-        ::std::mem::size_of::<_GObjectClass>(),
-        136usize,
-        concat!("Size of: ", stringify!(_GObjectClass))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_GObjectClass>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_GObjectClass))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GObjectClass>())).g_type_class as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GObjectClass),
-            "::",
-            stringify!(g_type_class)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<_GObjectClass>())).construct_properties as *const _ as usize
-        },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GObjectClass),
-            "::",
-            stringify!(construct_properties)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GObjectClass>())).constructor as *const _ as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GObjectClass),
-            "::",
-            stringify!(constructor)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GObjectClass>())).set_property as *const _ as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GObjectClass),
-            "::",
-            stringify!(set_property)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GObjectClass>())).get_property as *const _ as usize },
-        32usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GObjectClass),
-            "::",
-            stringify!(get_property)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GObjectClass>())).dispose as *const _ as usize },
-        40usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GObjectClass),
-            "::",
-            stringify!(dispose)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GObjectClass>())).finalize as *const _ as usize },
-        48usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GObjectClass),
-            "::",
-            stringify!(finalize)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<_GObjectClass>())).dispatch_properties_changed as *const _
-                as usize
-        },
-        56usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GObjectClass),
-            "::",
-            stringify!(dispatch_properties_changed)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GObjectClass>())).notify as *const _ as usize },
-        64usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GObjectClass),
-            "::",
-            stringify!(notify)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GObjectClass>())).constructed as *const _ as usize },
-        72usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GObjectClass),
-            "::",
-            stringify!(constructed)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GObjectClass>())).flags as *const _ as usize },
-        80usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GObjectClass),
-            "::",
-            stringify!(flags)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GObjectClass>())).pdummy as *const _ as usize },
-        88usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GObjectClass),
-            "::",
-            stringify!(pdummy)
-        )
-    );
+  assert_eq!(
+    ::std::mem::size_of::<_GObjectClass>(),
+    136usize,
+    concat!("Size of: ", stringify!(_GObjectClass))
+  );
+  assert_eq!(
+    ::std::mem::align_of::<_GObjectClass>(),
+    8usize,
+    concat!("Alignment of ", stringify!(_GObjectClass))
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GObjectClass>())).g_type_class as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GObjectClass),
+      "::",
+      stringify!(g_type_class)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GObjectClass>())).construct_properties as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GObjectClass),
+      "::",
+      stringify!(construct_properties)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GObjectClass>())).constructor as *const _ as usize },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GObjectClass),
+      "::",
+      stringify!(constructor)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GObjectClass>())).set_property as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GObjectClass),
+      "::",
+      stringify!(set_property)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GObjectClass>())).get_property as *const _ as usize },
+    32usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GObjectClass),
+      "::",
+      stringify!(get_property)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GObjectClass>())).dispose as *const _ as usize },
+    40usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GObjectClass),
+      "::",
+      stringify!(dispose)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GObjectClass>())).finalize as *const _ as usize },
+    48usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GObjectClass),
+      "::",
+      stringify!(finalize)
+    )
+  );
+  assert_eq!(
+    unsafe {
+      &(*(::std::ptr::null::<_GObjectClass>())).dispatch_properties_changed as *const _ as usize
+    },
+    56usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GObjectClass),
+      "::",
+      stringify!(dispatch_properties_changed)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GObjectClass>())).notify as *const _ as usize },
+    64usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GObjectClass),
+      "::",
+      stringify!(notify)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GObjectClass>())).constructed as *const _ as usize },
+    72usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GObjectClass),
+      "::",
+      stringify!(constructed)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GObjectClass>())).flags as *const _ as usize },
+    80usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GObjectClass),
+      "::",
+      stringify!(flags)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GObjectClass>())).pdummy as *const _ as usize },
+    88usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GObjectClass),
+      "::",
+      stringify!(pdummy)
+    )
+  );
 }
 #[doc = " GObjectConstructParam:"]
 #[doc = " @pspec: the #GParamSpec of the construct parameter"]
@@ -787,41 +784,41 @@ fn bindgen_test_layout__GObjectClass() {
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _GObjectConstructParam {
-    pub pspec: *mut GParamSpec,
-    pub value: *mut GValue,
+  pub pspec: *mut GParamSpec,
+  pub value: *mut GValue,
 }
 #[test]
 fn bindgen_test_layout__GObjectConstructParam() {
-    assert_eq!(
-        ::std::mem::size_of::<_GObjectConstructParam>(),
-        16usize,
-        concat!("Size of: ", stringify!(_GObjectConstructParam))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_GObjectConstructParam>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_GObjectConstructParam))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GObjectConstructParam>())).pspec as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GObjectConstructParam),
-            "::",
-            stringify!(pspec)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GObjectConstructParam>())).value as *const _ as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GObjectConstructParam),
-            "::",
-            stringify!(value)
-        )
-    );
+  assert_eq!(
+    ::std::mem::size_of::<_GObjectConstructParam>(),
+    16usize,
+    concat!("Size of: ", stringify!(_GObjectConstructParam))
+  );
+  assert_eq!(
+    ::std::mem::align_of::<_GObjectConstructParam>(),
+    8usize,
+    concat!("Alignment of ", stringify!(_GObjectConstructParam))
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GObjectConstructParam>())).pspec as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GObjectConstructParam),
+      "::",
+      stringify!(pspec)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GObjectConstructParam>())).value as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GObjectConstructParam),
+      "::",
+      stringify!(value)
+    )
+  );
 }
 pub const GdkScrollDirection_GDK_SCROLL_UP: GdkScrollDirection = 0;
 pub const GdkScrollDirection_GDK_SCROLL_DOWN: GdkScrollDirection = 1;
@@ -841,219 +838,219 @@ pub type GdkScrollDirection = u32;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _GtkWidgetPrivate {
-    _unused: [u8; 0],
+  _unused: [u8; 0],
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _GtkWidget {
-    pub parent_instance: GInitiallyUnowned,
-    pub priv_: *mut GtkWidgetPrivate,
+  pub parent_instance: GInitiallyUnowned,
+  pub priv_: *mut GtkWidgetPrivate,
 }
 #[test]
 fn bindgen_test_layout__GtkWidget() {
-    assert_eq!(
-        ::std::mem::size_of::<_GtkWidget>(),
-        32usize,
-        concat!("Size of: ", stringify!(_GtkWidget))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_GtkWidget>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_GtkWidget))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GtkWidget>())).parent_instance as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GtkWidget),
-            "::",
-            stringify!(parent_instance)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GtkWidget>())).priv_ as *const _ as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GtkWidget),
-            "::",
-            stringify!(priv_)
-        )
-    );
+  assert_eq!(
+    ::std::mem::size_of::<_GtkWidget>(),
+    32usize,
+    concat!("Size of: ", stringify!(_GtkWidget))
+  );
+  assert_eq!(
+    ::std::mem::align_of::<_GtkWidget>(),
+    8usize,
+    concat!("Alignment of ", stringify!(_GtkWidget))
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GtkWidget>())).parent_instance as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GtkWidget),
+      "::",
+      stringify!(parent_instance)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GtkWidget>())).priv_ as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GtkWidget),
+      "::",
+      stringify!(priv_)
+    )
+  );
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _GtkContainerPrivate {
-    _unused: [u8; 0],
+  _unused: [u8; 0],
 }
 #[repr(C)]
 pub struct _GtkContainer {
-    pub widget: GtkWidget,
-    pub priv_: *mut GtkContainerPrivate,
+  pub widget: GtkWidget,
+  pub priv_: *mut GtkContainerPrivate,
 }
 #[test]
 fn bindgen_test_layout__GtkContainer() {
-    assert_eq!(
-        ::std::mem::size_of::<_GtkContainer>(),
-        40usize,
-        concat!("Size of: ", stringify!(_GtkContainer))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_GtkContainer>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_GtkContainer))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GtkContainer>())).widget as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GtkContainer),
-            "::",
-            stringify!(widget)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GtkContainer>())).priv_ as *const _ as usize },
-        32usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GtkContainer),
-            "::",
-            stringify!(priv_)
-        )
-    );
+  assert_eq!(
+    ::std::mem::size_of::<_GtkContainer>(),
+    40usize,
+    concat!("Size of: ", stringify!(_GtkContainer))
+  );
+  assert_eq!(
+    ::std::mem::align_of::<_GtkContainer>(),
+    8usize,
+    concat!("Alignment of ", stringify!(_GtkContainer))
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GtkContainer>())).widget as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GtkContainer),
+      "::",
+      stringify!(widget)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GtkContainer>())).priv_ as *const _ as usize },
+    32usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GtkContainer),
+      "::",
+      stringify!(priv_)
+    )
+  );
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _GtkMenuShellPrivate {
-    _unused: [u8; 0],
+  _unused: [u8; 0],
 }
 #[repr(C)]
 pub struct _GtkMenuShell {
-    pub container: GtkContainer,
-    pub priv_: *mut GtkMenuShellPrivate,
+  pub container: GtkContainer,
+  pub priv_: *mut GtkMenuShellPrivate,
 }
 #[test]
 fn bindgen_test_layout__GtkMenuShell() {
-    assert_eq!(
-        ::std::mem::size_of::<_GtkMenuShell>(),
-        48usize,
-        concat!("Size of: ", stringify!(_GtkMenuShell))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_GtkMenuShell>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_GtkMenuShell))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GtkMenuShell>())).container as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GtkMenuShell),
-            "::",
-            stringify!(container)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GtkMenuShell>())).priv_ as *const _ as usize },
-        40usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GtkMenuShell),
-            "::",
-            stringify!(priv_)
-        )
-    );
+  assert_eq!(
+    ::std::mem::size_of::<_GtkMenuShell>(),
+    48usize,
+    concat!("Size of: ", stringify!(_GtkMenuShell))
+  );
+  assert_eq!(
+    ::std::mem::align_of::<_GtkMenuShell>(),
+    8usize,
+    concat!("Alignment of ", stringify!(_GtkMenuShell))
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GtkMenuShell>())).container as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GtkMenuShell),
+      "::",
+      stringify!(container)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GtkMenuShell>())).priv_ as *const _ as usize },
+    40usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GtkMenuShell),
+      "::",
+      stringify!(priv_)
+    )
+  );
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _GtkMenuPrivate {
-    _unused: [u8; 0],
+  _unused: [u8; 0],
 }
 #[repr(C)]
 pub struct _GtkMenu {
-    pub menu_shell: GtkMenuShell,
-    pub priv_: *mut GtkMenuPrivate,
+  pub menu_shell: GtkMenuShell,
+  pub priv_: *mut GtkMenuPrivate,
 }
 #[test]
 fn bindgen_test_layout__GtkMenu() {
-    assert_eq!(
-        ::std::mem::size_of::<_GtkMenu>(),
-        56usize,
-        concat!("Size of: ", stringify!(_GtkMenu))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_GtkMenu>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_GtkMenu))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GtkMenu>())).menu_shell as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GtkMenu),
-            "::",
-            stringify!(menu_shell)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GtkMenu>())).priv_ as *const _ as usize },
-        48usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GtkMenu),
-            "::",
-            stringify!(priv_)
-        )
-    );
+  assert_eq!(
+    ::std::mem::size_of::<_GtkMenu>(),
+    56usize,
+    concat!("Size of: ", stringify!(_GtkMenu))
+  );
+  assert_eq!(
+    ::std::mem::align_of::<_GtkMenu>(),
+    8usize,
+    concat!("Alignment of ", stringify!(_GtkMenu))
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GtkMenu>())).menu_shell as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GtkMenu),
+      "::",
+      stringify!(menu_shell)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GtkMenu>())).priv_ as *const _ as usize },
+    48usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GtkMenu),
+      "::",
+      stringify!(priv_)
+    )
+  );
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _GtkStatusIconPrivate {
-    _unused: [u8; 0],
+  _unused: [u8; 0],
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _GtkStatusIcon {
-    pub parent_instance: GObject,
-    pub priv_: *mut GtkStatusIconPrivate,
+  pub parent_instance: GObject,
+  pub priv_: *mut GtkStatusIconPrivate,
 }
 #[test]
 fn bindgen_test_layout__GtkStatusIcon() {
-    assert_eq!(
-        ::std::mem::size_of::<_GtkStatusIcon>(),
-        32usize,
-        concat!("Size of: ", stringify!(_GtkStatusIcon))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_GtkStatusIcon>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_GtkStatusIcon))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GtkStatusIcon>())).parent_instance as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GtkStatusIcon),
-            "::",
-            stringify!(parent_instance)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_GtkStatusIcon>())).priv_ as *const _ as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_GtkStatusIcon),
-            "::",
-            stringify!(priv_)
-        )
-    );
+  assert_eq!(
+    ::std::mem::size_of::<_GtkStatusIcon>(),
+    32usize,
+    concat!("Size of: ", stringify!(_GtkStatusIcon))
+  );
+  assert_eq!(
+    ::std::mem::align_of::<_GtkStatusIcon>(),
+    8usize,
+    concat!("Alignment of ", stringify!(_GtkStatusIcon))
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GtkStatusIcon>())).parent_instance as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GtkStatusIcon),
+      "::",
+      stringify!(parent_instance)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_GtkStatusIcon>())).priv_ as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_GtkStatusIcon),
+      "::",
+      stringify!(priv_)
+    )
+  );
 }
 pub const AppIndicatorCategory_APP_INDICATOR_CATEGORY_APPLICATION_STATUS: AppIndicatorCategory = 0;
 pub const AppIndicatorCategory_APP_INDICATOR_CATEGORY_COMMUNICATIONS: AppIndicatorCategory = 1;
@@ -1088,7 +1085,7 @@ pub type AppIndicatorClass = _AppIndicatorClass;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _AppIndicatorPrivate {
-    _unused: [u8; 0],
+  _unused: [u8; 0],
 }
 pub type AppIndicatorPrivate = _AppIndicatorPrivate;
 #[doc = " AppIndicatorClass:"]
@@ -1117,273 +1114,255 @@ pub type AppIndicatorPrivate = _AppIndicatorPrivate;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _AppIndicatorClass {
-    pub parent_class: GObjectClass,
-    pub new_icon: ::std::option::Option<
-        unsafe extern "C" fn(indicator: *mut AppIndicator, user_data: gpointer),
-    >,
-    pub new_attention_icon: ::std::option::Option<
-        unsafe extern "C" fn(indicator: *mut AppIndicator, user_data: gpointer),
-    >,
-    pub new_status: ::std::option::Option<
-        unsafe extern "C" fn(
-            indicator: *mut AppIndicator,
-            status: *const gchar,
-            user_data: gpointer,
-        ),
-    >,
-    pub new_icon_theme_path: ::std::option::Option<
-        unsafe extern "C" fn(
-            indicator: *mut AppIndicator,
-            icon_theme_path: *const gchar,
-            user_data: gpointer,
-        ),
-    >,
-    pub new_label: ::std::option::Option<
-        unsafe extern "C" fn(
-            indicator: *mut AppIndicator,
-            label: *const gchar,
-            guide: *const gchar,
-            user_data: gpointer,
-        ),
-    >,
-    pub connection_changed: ::std::option::Option<
-        unsafe extern "C" fn(
-            indicator: *mut AppIndicator,
-            connected: gboolean,
-            user_data: gpointer,
-        ),
-    >,
-    pub scroll_event: ::std::option::Option<
-        unsafe extern "C" fn(
-            indicator: *mut AppIndicator,
-            delta: gint,
-            direction: GdkScrollDirection,
-            user_data: gpointer,
-        ),
-    >,
-    pub app_indicator_reserved_ats: ::std::option::Option<unsafe extern "C" fn()>,
-    pub fallback: ::std::option::Option<
-        unsafe extern "C" fn(indicator: *mut AppIndicator) -> *mut GtkStatusIcon,
-    >,
-    pub unfallback: ::std::option::Option<
-        unsafe extern "C" fn(indicator: *mut AppIndicator, status_icon: *mut GtkStatusIcon),
-    >,
-    pub app_indicator_reserved_1: ::std::option::Option<unsafe extern "C" fn()>,
-    pub app_indicator_reserved_2: ::std::option::Option<unsafe extern "C" fn()>,
-    pub app_indicator_reserved_3: ::std::option::Option<unsafe extern "C" fn()>,
-    pub app_indicator_reserved_4: ::std::option::Option<unsafe extern "C" fn()>,
-    pub app_indicator_reserved_5: ::std::option::Option<unsafe extern "C" fn()>,
-    pub app_indicator_reserved_6: ::std::option::Option<unsafe extern "C" fn()>,
+  pub parent_class: GObjectClass,
+  pub new_icon:
+    ::std::option::Option<unsafe extern "C" fn(indicator: *mut AppIndicator, user_data: gpointer)>,
+  pub new_attention_icon:
+    ::std::option::Option<unsafe extern "C" fn(indicator: *mut AppIndicator, user_data: gpointer)>,
+  pub new_status: ::std::option::Option<
+    unsafe extern "C" fn(indicator: *mut AppIndicator, status: *const gchar, user_data: gpointer),
+  >,
+  pub new_icon_theme_path: ::std::option::Option<
+    unsafe extern "C" fn(
+      indicator: *mut AppIndicator,
+      icon_theme_path: *const gchar,
+      user_data: gpointer,
+    ),
+  >,
+  pub new_label: ::std::option::Option<
+    unsafe extern "C" fn(
+      indicator: *mut AppIndicator,
+      label: *const gchar,
+      guide: *const gchar,
+      user_data: gpointer,
+    ),
+  >,
+  pub connection_changed: ::std::option::Option<
+    unsafe extern "C" fn(indicator: *mut AppIndicator, connected: gboolean, user_data: gpointer),
+  >,
+  pub scroll_event: ::std::option::Option<
+    unsafe extern "C" fn(
+      indicator: *mut AppIndicator,
+      delta: gint,
+      direction: GdkScrollDirection,
+      user_data: gpointer,
+    ),
+  >,
+  pub app_indicator_reserved_ats: ::std::option::Option<unsafe extern "C" fn()>,
+  pub fallback:
+    ::std::option::Option<unsafe extern "C" fn(indicator: *mut AppIndicator) -> *mut GtkStatusIcon>,
+  pub unfallback: ::std::option::Option<
+    unsafe extern "C" fn(indicator: *mut AppIndicator, status_icon: *mut GtkStatusIcon),
+  >,
+  pub app_indicator_reserved_1: ::std::option::Option<unsafe extern "C" fn()>,
+  pub app_indicator_reserved_2: ::std::option::Option<unsafe extern "C" fn()>,
+  pub app_indicator_reserved_3: ::std::option::Option<unsafe extern "C" fn()>,
+  pub app_indicator_reserved_4: ::std::option::Option<unsafe extern "C" fn()>,
+  pub app_indicator_reserved_5: ::std::option::Option<unsafe extern "C" fn()>,
+  pub app_indicator_reserved_6: ::std::option::Option<unsafe extern "C" fn()>,
 }
 #[test]
 fn bindgen_test_layout__AppIndicatorClass() {
-    assert_eq!(
-        ::std::mem::size_of::<_AppIndicatorClass>(),
-        264usize,
-        concat!("Size of: ", stringify!(_AppIndicatorClass))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_AppIndicatorClass>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_AppIndicatorClass))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_AppIndicatorClass>())).parent_class as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_AppIndicatorClass),
-            "::",
-            stringify!(parent_class)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_AppIndicatorClass>())).new_icon as *const _ as usize },
-        136usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_AppIndicatorClass),
-            "::",
-            stringify!(new_icon)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<_AppIndicatorClass>())).new_attention_icon as *const _ as usize
-        },
-        144usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_AppIndicatorClass),
-            "::",
-            stringify!(new_attention_icon)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_AppIndicatorClass>())).new_status as *const _ as usize },
-        152usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_AppIndicatorClass),
-            "::",
-            stringify!(new_status)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<_AppIndicatorClass>())).new_icon_theme_path as *const _ as usize
-        },
-        160usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_AppIndicatorClass),
-            "::",
-            stringify!(new_icon_theme_path)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_AppIndicatorClass>())).new_label as *const _ as usize },
-        168usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_AppIndicatorClass),
-            "::",
-            stringify!(new_label)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<_AppIndicatorClass>())).connection_changed as *const _ as usize
-        },
-        176usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_AppIndicatorClass),
-            "::",
-            stringify!(connection_changed)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_AppIndicatorClass>())).scroll_event as *const _ as usize },
-        184usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_AppIndicatorClass),
-            "::",
-            stringify!(scroll_event)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<_AppIndicatorClass>())).app_indicator_reserved_ats as *const _
-                as usize
-        },
-        192usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_AppIndicatorClass),
-            "::",
-            stringify!(app_indicator_reserved_ats)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_AppIndicatorClass>())).fallback as *const _ as usize },
-        200usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_AppIndicatorClass),
-            "::",
-            stringify!(fallback)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_AppIndicatorClass>())).unfallback as *const _ as usize },
-        208usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_AppIndicatorClass),
-            "::",
-            stringify!(unfallback)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<_AppIndicatorClass>())).app_indicator_reserved_1 as *const _
-                as usize
-        },
-        216usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_AppIndicatorClass),
-            "::",
-            stringify!(app_indicator_reserved_1)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<_AppIndicatorClass>())).app_indicator_reserved_2 as *const _
-                as usize
-        },
-        224usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_AppIndicatorClass),
-            "::",
-            stringify!(app_indicator_reserved_2)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<_AppIndicatorClass>())).app_indicator_reserved_3 as *const _
-                as usize
-        },
-        232usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_AppIndicatorClass),
-            "::",
-            stringify!(app_indicator_reserved_3)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<_AppIndicatorClass>())).app_indicator_reserved_4 as *const _
-                as usize
-        },
-        240usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_AppIndicatorClass),
-            "::",
-            stringify!(app_indicator_reserved_4)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<_AppIndicatorClass>())).app_indicator_reserved_5 as *const _
-                as usize
-        },
-        248usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_AppIndicatorClass),
-            "::",
-            stringify!(app_indicator_reserved_5)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<_AppIndicatorClass>())).app_indicator_reserved_6 as *const _
-                as usize
-        },
-        256usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_AppIndicatorClass),
-            "::",
-            stringify!(app_indicator_reserved_6)
-        )
-    );
+  assert_eq!(
+    ::std::mem::size_of::<_AppIndicatorClass>(),
+    264usize,
+    concat!("Size of: ", stringify!(_AppIndicatorClass))
+  );
+  assert_eq!(
+    ::std::mem::align_of::<_AppIndicatorClass>(),
+    8usize,
+    concat!("Alignment of ", stringify!(_AppIndicatorClass))
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_AppIndicatorClass>())).parent_class as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_AppIndicatorClass),
+      "::",
+      stringify!(parent_class)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_AppIndicatorClass>())).new_icon as *const _ as usize },
+    136usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_AppIndicatorClass),
+      "::",
+      stringify!(new_icon)
+    )
+  );
+  assert_eq!(
+    unsafe {
+      &(*(::std::ptr::null::<_AppIndicatorClass>())).new_attention_icon as *const _ as usize
+    },
+    144usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_AppIndicatorClass),
+      "::",
+      stringify!(new_attention_icon)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_AppIndicatorClass>())).new_status as *const _ as usize },
+    152usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_AppIndicatorClass),
+      "::",
+      stringify!(new_status)
+    )
+  );
+  assert_eq!(
+    unsafe {
+      &(*(::std::ptr::null::<_AppIndicatorClass>())).new_icon_theme_path as *const _ as usize
+    },
+    160usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_AppIndicatorClass),
+      "::",
+      stringify!(new_icon_theme_path)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_AppIndicatorClass>())).new_label as *const _ as usize },
+    168usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_AppIndicatorClass),
+      "::",
+      stringify!(new_label)
+    )
+  );
+  assert_eq!(
+    unsafe {
+      &(*(::std::ptr::null::<_AppIndicatorClass>())).connection_changed as *const _ as usize
+    },
+    176usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_AppIndicatorClass),
+      "::",
+      stringify!(connection_changed)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_AppIndicatorClass>())).scroll_event as *const _ as usize },
+    184usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_AppIndicatorClass),
+      "::",
+      stringify!(scroll_event)
+    )
+  );
+  assert_eq!(
+    unsafe {
+      &(*(::std::ptr::null::<_AppIndicatorClass>())).app_indicator_reserved_ats as *const _ as usize
+    },
+    192usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_AppIndicatorClass),
+      "::",
+      stringify!(app_indicator_reserved_ats)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_AppIndicatorClass>())).fallback as *const _ as usize },
+    200usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_AppIndicatorClass),
+      "::",
+      stringify!(fallback)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_AppIndicatorClass>())).unfallback as *const _ as usize },
+    208usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_AppIndicatorClass),
+      "::",
+      stringify!(unfallback)
+    )
+  );
+  assert_eq!(
+    unsafe {
+      &(*(::std::ptr::null::<_AppIndicatorClass>())).app_indicator_reserved_1 as *const _ as usize
+    },
+    216usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_AppIndicatorClass),
+      "::",
+      stringify!(app_indicator_reserved_1)
+    )
+  );
+  assert_eq!(
+    unsafe {
+      &(*(::std::ptr::null::<_AppIndicatorClass>())).app_indicator_reserved_2 as *const _ as usize
+    },
+    224usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_AppIndicatorClass),
+      "::",
+      stringify!(app_indicator_reserved_2)
+    )
+  );
+  assert_eq!(
+    unsafe {
+      &(*(::std::ptr::null::<_AppIndicatorClass>())).app_indicator_reserved_3 as *const _ as usize
+    },
+    232usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_AppIndicatorClass),
+      "::",
+      stringify!(app_indicator_reserved_3)
+    )
+  );
+  assert_eq!(
+    unsafe {
+      &(*(::std::ptr::null::<_AppIndicatorClass>())).app_indicator_reserved_4 as *const _ as usize
+    },
+    240usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_AppIndicatorClass),
+      "::",
+      stringify!(app_indicator_reserved_4)
+    )
+  );
+  assert_eq!(
+    unsafe {
+      &(*(::std::ptr::null::<_AppIndicatorClass>())).app_indicator_reserved_5 as *const _ as usize
+    },
+    248usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_AppIndicatorClass),
+      "::",
+      stringify!(app_indicator_reserved_5)
+    )
+  );
+  assert_eq!(
+    unsafe {
+      &(*(::std::ptr::null::<_AppIndicatorClass>())).app_indicator_reserved_6 as *const _ as usize
+    },
+    256usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_AppIndicatorClass),
+      "::",
+      stringify!(app_indicator_reserved_6)
+    )
+  );
 }
 #[doc = " AppIndicator:"]
 #[doc = ""]
@@ -1398,157 +1377,154 @@ fn bindgen_test_layout__AppIndicatorClass() {
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _AppIndicator {
-    pub parent: GObject,
-    pub priv_: *mut AppIndicatorPrivate,
+  pub parent: GObject,
+  pub priv_: *mut AppIndicatorPrivate,
 }
 #[test]
 fn bindgen_test_layout__AppIndicator() {
-    assert_eq!(
-        ::std::mem::size_of::<_AppIndicator>(),
-        32usize,
-        concat!("Size of: ", stringify!(_AppIndicator))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_AppIndicator>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_AppIndicator))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_AppIndicator>())).parent as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_AppIndicator),
-            "::",
-            stringify!(parent)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<_AppIndicator>())).priv_ as *const _ as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_AppIndicator),
-            "::",
-            stringify!(priv_)
-        )
-    );
+  assert_eq!(
+    ::std::mem::size_of::<_AppIndicator>(),
+    32usize,
+    concat!("Size of: ", stringify!(_AppIndicator))
+  );
+  assert_eq!(
+    ::std::mem::align_of::<_AppIndicator>(),
+    8usize,
+    concat!("Alignment of ", stringify!(_AppIndicator))
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_AppIndicator>())).parent as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_AppIndicator),
+      "::",
+      stringify!(parent)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::std::ptr::null::<_AppIndicator>())).priv_ as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_AppIndicator),
+      "::",
+      stringify!(priv_)
+    )
+  );
 }
 extern "C" {
-    pub fn app_indicator_get_type() -> GType;
+  pub fn app_indicator_get_type() -> GType;
 }
 extern "C" {
-    pub fn app_indicator_new(
-        id: *const gchar,
-        icon_name: *const gchar,
-        category: AppIndicatorCategory,
-    ) -> *mut AppIndicator;
+  pub fn app_indicator_new(
+    id: *const gchar,
+    icon_name: *const gchar,
+    category: AppIndicatorCategory,
+  ) -> *mut AppIndicator;
 }
 extern "C" {
-    pub fn app_indicator_new_with_path(
-        id: *const gchar,
-        icon_name: *const gchar,
-        category: AppIndicatorCategory,
-        icon_theme_path: *const gchar,
-    ) -> *mut AppIndicator;
+  pub fn app_indicator_new_with_path(
+    id: *const gchar,
+    icon_name: *const gchar,
+    category: AppIndicatorCategory,
+    icon_theme_path: *const gchar,
+  ) -> *mut AppIndicator;
 }
 extern "C" {
-    pub fn app_indicator_set_status(self_: *mut AppIndicator, status: AppIndicatorStatus);
+  pub fn app_indicator_set_status(self_: *mut AppIndicator, status: AppIndicatorStatus);
 }
 extern "C" {
-    pub fn app_indicator_set_attention_icon(self_: *mut AppIndicator, icon_name: *const gchar);
+  pub fn app_indicator_set_attention_icon(self_: *mut AppIndicator, icon_name: *const gchar);
 }
 extern "C" {
-    pub fn app_indicator_set_attention_icon_full(
-        self_: *mut AppIndicator,
-        icon_name: *const gchar,
-        icon_desc: *const gchar,
-    );
+  pub fn app_indicator_set_attention_icon_full(
+    self_: *mut AppIndicator,
+    icon_name: *const gchar,
+    icon_desc: *const gchar,
+  );
 }
 extern "C" {
-    pub fn app_indicator_set_menu(self_: *mut AppIndicator, menu: *mut GtkMenu);
+  pub fn app_indicator_set_menu(self_: *mut AppIndicator, menu: *mut GtkMenu);
 }
 extern "C" {
-    pub fn app_indicator_set_icon(self_: *mut AppIndicator, icon_name: *const gchar);
+  pub fn app_indicator_set_icon(self_: *mut AppIndicator, icon_name: *const gchar);
 }
 extern "C" {
-    pub fn app_indicator_set_icon_full(
-        self_: *mut AppIndicator,
-        icon_name: *const gchar,
-        icon_desc: *const gchar,
-    );
+  pub fn app_indicator_set_icon_full(
+    self_: *mut AppIndicator,
+    icon_name: *const gchar,
+    icon_desc: *const gchar,
+  );
 }
 extern "C" {
-    pub fn app_indicator_set_label(
-        self_: *mut AppIndicator,
-        label: *const gchar,
-        guide: *const gchar,
-    );
+  pub fn app_indicator_set_label(
+    self_: *mut AppIndicator,
+    label: *const gchar,
+    guide: *const gchar,
+  );
 }
 extern "C" {
-    pub fn app_indicator_set_icon_theme_path(
-        self_: *mut AppIndicator,
-        icon_theme_path: *const gchar,
-    );
+  pub fn app_indicator_set_icon_theme_path(self_: *mut AppIndicator, icon_theme_path: *const gchar);
 }
 extern "C" {
-    pub fn app_indicator_set_ordering_index(self_: *mut AppIndicator, ordering_index: guint32);
+  pub fn app_indicator_set_ordering_index(self_: *mut AppIndicator, ordering_index: guint32);
 }
 extern "C" {
-    pub fn app_indicator_set_secondary_activate_target(
-        self_: *mut AppIndicator,
-        menuitem: *mut GtkWidget,
-    );
+  pub fn app_indicator_set_secondary_activate_target(
+    self_: *mut AppIndicator,
+    menuitem: *mut GtkWidget,
+  );
 }
 extern "C" {
-    pub fn app_indicator_set_title(self_: *mut AppIndicator, title: *const gchar);
+  pub fn app_indicator_set_title(self_: *mut AppIndicator, title: *const gchar);
 }
 extern "C" {
-    pub fn app_indicator_get_id(self_: *mut AppIndicator) -> *const gchar;
+  pub fn app_indicator_get_id(self_: *mut AppIndicator) -> *const gchar;
 }
 extern "C" {
-    pub fn app_indicator_get_category(self_: *mut AppIndicator) -> AppIndicatorCategory;
+  pub fn app_indicator_get_category(self_: *mut AppIndicator) -> AppIndicatorCategory;
 }
 extern "C" {
-    pub fn app_indicator_get_status(self_: *mut AppIndicator) -> AppIndicatorStatus;
+  pub fn app_indicator_get_status(self_: *mut AppIndicator) -> AppIndicatorStatus;
 }
 extern "C" {
-    pub fn app_indicator_get_icon(self_: *mut AppIndicator) -> *const gchar;
+  pub fn app_indicator_get_icon(self_: *mut AppIndicator) -> *const gchar;
 }
 extern "C" {
-    pub fn app_indicator_get_icon_desc(self_: *mut AppIndicator) -> *const gchar;
+  pub fn app_indicator_get_icon_desc(self_: *mut AppIndicator) -> *const gchar;
 }
 extern "C" {
-    pub fn app_indicator_get_icon_theme_path(self_: *mut AppIndicator) -> *const gchar;
+  pub fn app_indicator_get_icon_theme_path(self_: *mut AppIndicator) -> *const gchar;
 }
 extern "C" {
-    pub fn app_indicator_get_attention_icon(self_: *mut AppIndicator) -> *const gchar;
+  pub fn app_indicator_get_attention_icon(self_: *mut AppIndicator) -> *const gchar;
 }
 extern "C" {
-    pub fn app_indicator_get_attention_icon_desc(self_: *mut AppIndicator) -> *const gchar;
+  pub fn app_indicator_get_attention_icon_desc(self_: *mut AppIndicator) -> *const gchar;
 }
 extern "C" {
-    pub fn app_indicator_get_title(self_: *mut AppIndicator) -> *const gchar;
+  pub fn app_indicator_get_title(self_: *mut AppIndicator) -> *const gchar;
 }
 extern "C" {
-    pub fn app_indicator_get_menu(self_: *mut AppIndicator) -> *mut GtkMenu;
+  pub fn app_indicator_get_menu(self_: *mut AppIndicator) -> *mut GtkMenu;
 }
 extern "C" {
-    pub fn app_indicator_get_label(self_: *mut AppIndicator) -> *const gchar;
+  pub fn app_indicator_get_label(self_: *mut AppIndicator) -> *const gchar;
 }
 extern "C" {
-    pub fn app_indicator_get_label_guide(self_: *mut AppIndicator) -> *const gchar;
+  pub fn app_indicator_get_label_guide(self_: *mut AppIndicator) -> *const gchar;
 }
 extern "C" {
-    pub fn app_indicator_get_ordering_index(self_: *mut AppIndicator) -> guint32;
+  pub fn app_indicator_get_ordering_index(self_: *mut AppIndicator) -> guint32;
 }
 extern "C" {
-    pub fn app_indicator_get_secondary_activate_target(self_: *mut AppIndicator) -> *mut GtkWidget;
+  pub fn app_indicator_get_secondary_activate_target(self_: *mut AppIndicator) -> *mut GtkWidget;
 }
 extern "C" {
-    pub fn app_indicator_build_menu_from_desktop(
-        self_: *mut AppIndicator,
-        desktop_file: *const gchar,
-        desktop_profile: *const gchar,
-    );
+  pub fn app_indicator_build_menu_from_desktop(
+    self_: *mut AppIndicator,
+    desktop_file: *const gchar,
+    desktop_profile: *const gchar,
+  );
 }

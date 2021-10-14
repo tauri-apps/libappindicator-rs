@@ -2,7 +2,7 @@
 name = "libappindicator-sys"
 version = "0.6.0"
 description = "Rust sys bindings for libappindicator"
-license = "MIT"
+license = "Apache-2.0 OR MIT"
 keywords = [ "linux", "gui" ]
 build = "build.rs"
 edition = "2018"
