@@ -9,7 +9,7 @@ edition = "2018"
 categories = [ "external-ffi-bindings" ]
 
 [dependencies]
-gtk-sys = "0.14"
+gtk-sys = "0.15"
 
 [build-dependencies]
 pkg-config = "0.3"
