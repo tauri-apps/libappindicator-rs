@@ -1,5 +1,10 @@
 # Changelog
 
+## \[0.7.0]
+
+- Update to gtk 0.15
+  - [ae54bef](https://github.com/tauri-apps/javascriptcore-rs/commit/ae54bef8d37f508174c0995f6a9f4b6288107cbd) Update to gtk 0.15 on 2022-01-17
+
 ## \[0.6.1]
 
 - Update license to Apache-2.0 OR MIT.
