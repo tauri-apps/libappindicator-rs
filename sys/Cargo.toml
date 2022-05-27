@@ -4,12 +4,12 @@ version = "0.7.0"
 description = "Rust sys bindings for libappindicator"
 license = "Apache-2.0 OR MIT"
 keywords = [ "linux", "gui" ]
-build = "build.rs"
 edition = "2018"
 categories = [ "external-ffi-bindings" ]
 
 [dependencies]
 gtk-sys = "0.15"
-
-[build-dependencies]
+libloading = "0.7"
+once_cell = "1.12"
 pkg-config = "0.3"
+
