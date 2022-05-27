@@ -8,12 +8,39 @@ use gtk_sys::{
 };
 use once_cell::sync::Lazy;
 use libloading::*;
-use std::os::raw::*;
+use std::{os::raw::*, process::Command};
 
 pub static LIB: Lazy<Library> = Lazy::new(|| {
-    //let lib = pkg_config::probe_library("ayatana-appindicator3-0.1").unwrap();
-    unsafe { Library::new("/usr/lib/x86_64-linux-gnu/libayatana-appindicator3.so").unwrap() }
+    // PKG_CONFIG_ALLOW_SYSTEM_LIBS=1 pkg-config --libs-only-L ayatana-appindicator3-0.1
+    let path = match get_path("ayatana-appindicator3-0.1") {
+        Some(p) => format!("{}/libayatana-appindicator3.so", p),
+        None => match get_path("appindicator3-0.1") {
+            Some(p) => format!("{}/libappindicator3.so", p),
+            None => panic!("Can't detect any appindicator library"),
+        },
+    };
+    unsafe { Library::new(path).unwrap() }
 });
+
+fn get_path(name: &str) -> Option<String> {
+    let mut cmd = Command::new("pkg-config");
+    cmd.env("PKG_CONFIG_ALLOW_SYSTEM_LIBS", "1");
+    cmd.arg("--libs-only-L");
+    cmd.arg(name);
+    if let Ok(output) = cmd.output() {
+        if !output.stdout.is_empty() {
+            // output would be "-L/path/to/library\n"
+            let len = output.stdout.len();
+            let word = output.stdout[2..len-1].to_vec();
+            return Some(String::from_utf8_lossy(&word).to_string());
+        } else {
+            return None;
+        }
+    } else {
+        return None;
+    }
+
+}
 
 
 pub type guint32 = c_uint;

@@ -11,5 +11,4 @@ categories = [ "external-ffi-bindings" ]
 gtk-sys = "0.15"
 libloading = "0.7"
 once_cell = "1.12"
-pkg-config = "0.3"
 
