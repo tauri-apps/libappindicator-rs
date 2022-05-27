@@ -6,42 +6,40 @@ use gtk_sys::{
   GtkContainer, GtkContainerPrivate, GtkMenu, GtkMenuPrivate, GtkMenuShell, GtkMenuShellPrivate,
   GtkStatusIconPrivate, GtkWidget, GtkWidgetPrivate,
 };
-use once_cell::sync::Lazy;
 use libloading::*;
+use once_cell::sync::Lazy;
 use std::{os::raw::*, process::Command};
 
 pub static LIB: Lazy<Library> = Lazy::new(|| {
-    // PKG_CONFIG_ALLOW_SYSTEM_LIBS=1 pkg-config --libs-only-L ayatana-appindicator3-0.1
-    let path = match get_path("ayatana-appindicator3-0.1") {
-        Some(p) => format!("{}/libayatana-appindicator3.so", p),
-        None => match get_path("appindicator3-0.1") {
-            Some(p) => format!("{}/libappindicator3.so", p),
-            None => panic!("Can't detect any appindicator library"),
-        },
-    };
-    unsafe { Library::new(path).unwrap() }
+  // PKG_CONFIG_ALLOW_SYSTEM_LIBS=1 pkg-config --libs-only-L ayatana-appindicator3-0.1
+  let path = match get_path("ayatana-appindicator3-0.1") {
+    Some(p) => format!("{}/libayatana-appindicator3.so", p),
+    None => match get_path("appindicator3-0.1") {
+      Some(p) => format!("{}/libappindicator3.so", p),
+      None => panic!("Can't detect any appindicator library"),
+    },
+  };
+  unsafe { Library::new(path).unwrap() }
 });
 
 fn get_path(name: &str) -> Option<String> {
-    let mut cmd = Command::new("pkg-config");
-    cmd.env("PKG_CONFIG_ALLOW_SYSTEM_LIBS", "1");
-    cmd.arg("--libs-only-L");
-    cmd.arg(name);
-    if let Ok(output) = cmd.output() {
-        if !output.stdout.is_empty() {
-            // output would be "-L/path/to/library\n"
-            let len = output.stdout.len();
-            let word = output.stdout[2..len-1].to_vec();
-            return Some(String::from_utf8_lossy(&word).to_string());
-        } else {
-            return None;
-        }
+  let mut cmd = Command::new("pkg-config");
+  cmd.env("PKG_CONFIG_ALLOW_SYSTEM_LIBS", "1");
+  cmd.arg("--libs-only-L");
+  cmd.arg(name);
+  if let Ok(output) = cmd.output() {
+    if !output.stdout.is_empty() {
+      // output would be "-L/path/to/library\n"
+      let len = output.stdout.len();
+      let word = output.stdout[2..len - 1].to_vec();
+      return Some(String::from_utf8_lossy(&word).to_string());
     } else {
-        return None;
+      return None;
     }
-
+  } else {
+    return None;
+  }
 }
-
 
 pub type guint32 = c_uint;
 pub type gint64 = c_long;
@@ -890,203 +888,331 @@ fn bindgen_test_layout__AppIndicator() {
 }
 
 pub unsafe fn app_indicator_get_type() -> GType {
-    let f = LIB.get::<unsafe extern fn() -> GType>(b"app_indicator_get_type\0")
-        .expect("Can't get the extern function. This shouldn't happen unless the linked library is wrong.");
-    f()
+  let f = LIB
+    .get::<unsafe extern "C" fn() -> GType>(b"app_indicator_get_type\0")
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f()
 }
 
 // TODO use OnceCell to store symbols.
 pub unsafe fn app_indicator_new(
-    id: *const gchar,
-    icon_name: *const gchar,
-    category: AppIndicatorCategory,
+  id: *const gchar,
+  icon_name: *const gchar,
+  category: AppIndicatorCategory,
 ) -> *mut AppIndicator {
-    let f = LIB.get::<unsafe extern fn(*const gchar, *const gchar, AppIndicatorCategory) -> *mut AppIndicator>(b"app_indicator_new\0")
+  let f = LIB.get::<unsafe extern fn(*const gchar, *const gchar, AppIndicatorCategory) -> *mut AppIndicator>(b"app_indicator_new\0")
         .expect("Can't get the extern function. This shouldn't happen unless the linked library is wrong.");
-    f(id, icon_name, category)
+  f(id, icon_name, category)
 }
 
 pub unsafe fn app_indicator_new_with_path(
-    id: *const gchar,
-    icon_name: *const gchar,
-    category: AppIndicatorCategory,
-    icon_theme_path: *const gchar,
+  id: *const gchar,
+  icon_name: *const gchar,
+  category: AppIndicatorCategory,
+  icon_theme_path: *const gchar,
 ) -> *mut AppIndicator {
-    let f = LIB.get::<unsafe extern fn(*const gchar, *const gchar, AppIndicatorCategory, *const gchar) -> *mut AppIndicator>(b"app_indicator_new_with_path\0")
-        .expect("Can't get the extern function. This shouldn't happen unless the linked library is wrong.");
-    f(id, icon_name, category, icon_theme_path)
+  let f = LIB
+    .get::<unsafe extern "C" fn(
+      *const gchar,
+      *const gchar,
+      AppIndicatorCategory,
+      *const gchar,
+    ) -> *mut AppIndicator>(b"app_indicator_new_with_path\0")
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(id, icon_name, category, icon_theme_path)
 }
 
 pub unsafe fn app_indicator_set_status(self_: *mut AppIndicator, status: AppIndicatorStatus) {
-    let f = LIB.get::<unsafe extern fn(*mut AppIndicator, AppIndicatorStatus)>(b"app_indicator_set_status\0")
-        .expect("Can't get the extern function. This shouldn't happen unless the linked library is wrong.");
-    f(self_, status)
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator, AppIndicatorStatus)>(
+      b"app_indicator_set_status\0",
+    )
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_, status)
 }
 
 pub unsafe fn app_indicator_set_attention_icon(self_: *mut AppIndicator, icon_name: *const gchar) {
-    let f = LIB.get::<unsafe extern fn(*mut AppIndicator, *const gchar)>(b"app_indicator_set_attention_icon\0")
-        .expect("Can't get the extern function. This shouldn't happen unless the linked library is wrong.");
-    f(self_, icon_name)
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator, *const gchar)>(
+      b"app_indicator_set_attention_icon\0",
+    )
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_, icon_name)
 }
 
 pub unsafe fn app_indicator_set_attention_icon_full(
-    self_: *mut AppIndicator,
-    icon_name: *const gchar,
-    icon_desc: *const gchar,
+  self_: *mut AppIndicator,
+  icon_name: *const gchar,
+  icon_desc: *const gchar,
 ) {
-    let f = LIB.get::<unsafe extern fn(*mut AppIndicator, *const gchar, *const gchar)>(b"app_indicator_set_attention_icon_full\0")
-        .expect("Can't get the extern function. This shouldn't happen unless the linked library is wrong.");
-    f(self_, icon_name, icon_desc)
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator, *const gchar, *const gchar)>(
+      b"app_indicator_set_attention_icon_full\0",
+    )
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_, icon_name, icon_desc)
 }
 
-pub unsafe fn app_indicator_set_menu(self_: *mut AppIndicator, menu: *mut GtkMenu){
-    let f = LIB.get::<unsafe extern fn(*mut AppIndicator, *mut GtkMenu)>(b"app_indicator_set_menu\0")
-        .expect("Can't get the extern function. This shouldn't happen unless the linked library is wrong.");
-    f(self_, menu)
+pub unsafe fn app_indicator_set_menu(self_: *mut AppIndicator, menu: *mut GtkMenu) {
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator, *mut GtkMenu)>(b"app_indicator_set_menu\0")
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_, menu)
 }
 
 pub unsafe fn app_indicator_set_icon(self_: *mut AppIndicator, icon_name: *const gchar) {
-    let f = LIB.get::<unsafe extern fn(*mut AppIndicator, *const gchar)>(b"app_indicator_set_icon\0")
-        .expect("Can't get the extern function. This shouldn't happen unless the linked library is wrong.");
-    f(self_, icon_name)
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator, *const gchar)>(b"app_indicator_set_icon\0")
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_, icon_name)
 }
 pub unsafe fn app_indicator_set_icon_full(
-    self_: *mut AppIndicator,
-    icon_name: *const gchar,
-    icon_desc: *const gchar,
-  ) {
-    let f = LIB.get::<unsafe extern fn(*mut AppIndicator, *const gchar, *const gchar)>(b"app_indicator_set_icon_full\0")
-        .expect("Can't get the extern function. This shouldn't happen unless the linked library is wrong.");
-    f(self_, icon_name, icon_desc)
+  self_: *mut AppIndicator,
+  icon_name: *const gchar,
+  icon_desc: *const gchar,
+) {
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator, *const gchar, *const gchar)>(
+      b"app_indicator_set_icon_full\0",
+    )
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_, icon_name, icon_desc)
 }
 
 pub unsafe fn app_indicator_set_label(
-self_: *mut AppIndicator,
-label: *const gchar,
-guide: *const gchar,
+  self_: *mut AppIndicator,
+  label: *const gchar,
+  guide: *const gchar,
 ) {
-    let f = LIB.get::<unsafe extern fn(*mut AppIndicator, *const gchar, *const gchar)>(b"app_indicator_set_label\0")
-        .expect("Can't get the extern function. This shouldn't happen unless the linked library is wrong.");
-    f(self_, label, guide)
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator, *const gchar, *const gchar)>(
+      b"app_indicator_set_label\0",
+    )
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_, label, guide)
 }
 
-pub unsafe fn app_indicator_set_icon_theme_path(self_: *mut AppIndicator, icon_theme_path: *const gchar) {
-    let f = LIB.get::<unsafe extern fn(*mut AppIndicator, *const gchar)>(b"app_indicator_set_icon_theme_path\0")
-        .expect("Can't get the extern function. This shouldn't happen unless the linked library is wrong.");
-    f(self_, icon_theme_path)
+pub unsafe fn app_indicator_set_icon_theme_path(
+  self_: *mut AppIndicator,
+  icon_theme_path: *const gchar,
+) {
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator, *const gchar)>(
+      b"app_indicator_set_icon_theme_path\0",
+    )
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_, icon_theme_path)
 }
 
 pub unsafe fn app_indicator_set_ordering_index(self_: *mut AppIndicator, ordering_index: guint32) {
-    let f = LIB.get::<unsafe extern fn(*mut AppIndicator, guint32)>(b"app_indicator_set_ordering_index\0")
-        .expect("Can't get the extern function. This shouldn't happen unless the linked library is wrong.");
-    f(self_, ordering_index)
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator, guint32)>(b"app_indicator_set_ordering_index\0")
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_, ordering_index)
 }
 
 pub unsafe fn app_indicator_set_secondary_activate_target(
-self_: *mut AppIndicator,
-menuitem: *mut GtkWidget,
+  self_: *mut AppIndicator,
+  menuitem: *mut GtkWidget,
 ) {
-    let f = LIB.get::<unsafe extern fn(*mut AppIndicator, *mut GtkWidget)>(b"app_indicator_set_secondary_activate_target\0")
-        .expect("Can't get the extern function. This shouldn't happen unless the linked library is wrong.");
-    f(self_, menuitem)
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator, *mut GtkWidget)>(
+      b"app_indicator_set_secondary_activate_target\0",
+    )
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_, menuitem)
 }
 
 pub unsafe fn app_indicator_set_title(self_: *mut AppIndicator, title: *const gchar) {
-    let f = LIB.get::<unsafe extern fn(*mut AppIndicator, *const gchar)>(b"app_indicator_set_title\0")
-        .expect("Can't get the extern function. This shouldn't happen unless the linked library is wrong.");
-    f(self_, title)
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator, *const gchar)>(b"app_indicator_set_title\0")
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_, title)
 }
 
 pub unsafe fn app_indicator_get_id(self_: *mut AppIndicator) -> *const gchar {
-    let f = LIB.get::<unsafe extern fn(*mut AppIndicator) -> *const gchar>(b"app_indicator_get_id\0")
-        .expect("Can't get the extern function. This shouldn't happen unless the linked library is wrong.");
-    f(self_)
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator) -> *const gchar>(b"app_indicator_get_id\0")
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_)
 }
 
 pub unsafe fn app_indicator_get_category(self_: *mut AppIndicator) -> AppIndicatorCategory {
-    let f = LIB.get::<unsafe extern fn(*mut AppIndicator) -> AppIndicatorCategory>(b"app_indicator_get_category\0")
-        .expect("Can't get the extern function. This shouldn't happen unless the linked library is wrong.");
-    f(self_)
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator) -> AppIndicatorCategory>(
+      b"app_indicator_get_category\0",
+    )
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_)
 }
 
 pub unsafe fn app_indicator_get_status(self_: *mut AppIndicator) -> AppIndicatorStatus {
-    let f = LIB.get::<unsafe extern fn(*mut AppIndicator) -> AppIndicatorStatus>(b"app_indicator_get_status\0")
-        .expect("Can't get the extern function. This shouldn't happen unless the linked library is wrong.");
-    f(self_)
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator) -> AppIndicatorStatus>(
+      b"app_indicator_get_status\0",
+    )
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_)
 }
 
 pub unsafe fn app_indicator_get_icon(self_: *mut AppIndicator) -> *const gchar {
-    let f = LIB.get::<unsafe extern fn(*mut AppIndicator) -> *const gchar>(b"app_indicator_get_icon\0")
-        .expect("Can't get the extern function. This shouldn't happen unless the linked library is wrong.");
-    f(self_)
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator) -> *const gchar>(b"app_indicator_get_icon\0")
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_)
 }
 
 pub unsafe fn app_indicator_get_icon_desc(self_: *mut AppIndicator) -> *const gchar {
-    let f = LIB.get::<unsafe extern fn(*mut AppIndicator) -> *const gchar>(b"app_indicator_get_icon_desc\0")
-        .expect("Can't get the extern function. This shouldn't happen unless the linked library is wrong.");
-    f(self_)
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator) -> *const gchar>(
+      b"app_indicator_get_icon_desc\0",
+    )
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_)
 }
 
 pub unsafe fn app_indicator_get_icon_theme_path(self_: *mut AppIndicator) -> *const gchar {
-    let f = LIB.get::<unsafe extern fn(*mut AppIndicator) -> *const gchar>(b"app_indicator_get_icon_theme_path\0")
-        .expect("Can't get the extern function. This shouldn't happen unless the linked library is wrong.");
-    f(self_)
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator) -> *const gchar>(
+      b"app_indicator_get_icon_theme_path\0",
+    )
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_)
 }
 
 pub unsafe fn app_indicator_get_attention_icon(self_: *mut AppIndicator) -> *const gchar {
-    let f = LIB.get::<unsafe extern fn(*mut AppIndicator) -> *const gchar>(b"app_indicator_get_attention_icon\0")
-        .expect("Can't get the extern function. This shouldn't happen unless the linked library is wrong.");
-    f(self_)
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator) -> *const gchar>(
+      b"app_indicator_get_attention_icon\0",
+    )
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_)
 }
 
 pub unsafe fn app_indicator_get_attention_icon_desc(self_: *mut AppIndicator) -> *const gchar {
-    let f = LIB.get::<unsafe extern fn(*mut AppIndicator) -> *const gchar>(b"app_indicator_get_attention_icon_desc\0")
-        .expect("Can't get the extern function. This shouldn't happen unless the linked library is wrong.");
-    f(self_)
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator) -> *const gchar>(
+      b"app_indicator_get_attention_icon_desc\0",
+    )
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_)
 }
 
 pub unsafe fn app_indicator_get_title(self_: *mut AppIndicator) -> *const gchar {
-    let f = LIB.get::<unsafe extern fn(*mut AppIndicator) -> *const gchar>(b"app_indicator_get_title\0")
-        .expect("Can't get the extern function. This shouldn't happen unless the linked library is wrong.");
-    f(self_)
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator) -> *const gchar>(b"app_indicator_get_title\0")
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_)
 }
 
 pub unsafe fn app_indicator_get_menu(self_: *mut AppIndicator) -> *mut GtkMenu {
-    let f = LIB.get::<unsafe extern fn(*mut AppIndicator) -> *mut GtkMenu>(b"app_indicator_get_menu\0")
-        .expect("Can't get the extern function. This shouldn't happen unless the linked library is wrong.");
-    f(self_)
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator) -> *mut GtkMenu>(b"app_indicator_get_menu\0")
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_)
 }
 
 pub unsafe fn app_indicator_get_label(self_: *mut AppIndicator) -> *const gchar {
-    let f = LIB.get::<unsafe extern fn(*mut AppIndicator) -> *const gchar>(b"app_indicator_get_label\0")
-        .expect("Can't get the extern function. This shouldn't happen unless the linked library is wrong.");
-    f(self_)
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator) -> *const gchar>(b"app_indicator_get_label\0")
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_)
 }
 
 pub unsafe fn app_indicator_get_label_guide(self_: *mut AppIndicator) -> *const gchar {
-    let f = LIB.get::<unsafe extern fn(*mut AppIndicator) -> *const gchar>(b"app_indicator_get_label_guide\0")
-        .expect("Can't get the extern function. This shouldn't happen unless the linked library is wrong.");
-    f(self_)
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator) -> *const gchar>(
+      b"app_indicator_get_label_guide\0",
+    )
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_)
 }
 
 pub unsafe fn app_indicator_get_ordering_index(self_: *mut AppIndicator) -> guint32 {
-    let f = LIB.get::<unsafe extern fn(*mut AppIndicator) -> guint32>(b"app_indicator_get_ordering_index\0")
-        .expect("Can't get the extern function. This shouldn't happen unless the linked library is wrong.");
-    f(self_)
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator) -> guint32>(
+      b"app_indicator_get_ordering_index\0",
+    )
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_)
 }
 
-pub unsafe fn app_indicator_get_secondary_activate_target(self_: *mut AppIndicator) -> *mut GtkWidget {
-    let f = LIB.get::<unsafe extern fn(*mut AppIndicator) -> *mut GtkWidget>(b"app_indicator_get_secondary_activate_target\0")
-        .expect("Can't get the extern function. This shouldn't happen unless the linked library is wrong.");
-    f(self_)
+pub unsafe fn app_indicator_get_secondary_activate_target(
+  self_: *mut AppIndicator,
+) -> *mut GtkWidget {
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator) -> *mut GtkWidget>(
+      b"app_indicator_get_secondary_activate_target\0",
+    )
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_)
 }
 
 pub unsafe fn app_indicator_build_menu_from_desktop(
-self_: *mut AppIndicator,
-desktop_file: *const gchar,
-desktop_profile: *const gchar,
+  self_: *mut AppIndicator,
+  desktop_file: *const gchar,
+  desktop_profile: *const gchar,
 ) {
-    let f = LIB.get::<unsafe extern fn(*mut AppIndicator, *const gchar, *const gchar)>(b"app_indicator_build_menu_from_desktop\0")
-        .expect("Can't get the extern function. This shouldn't happen unless the linked library is wrong.");
-    f(self_, desktop_file, desktop_profile)
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator, *const gchar, *const gchar)>(
+      b"app_indicator_build_menu_from_desktop\0",
+    )
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_, desktop_file, desktop_profile)
 }
