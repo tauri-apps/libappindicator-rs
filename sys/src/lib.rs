@@ -30,9 +30,8 @@ fn get_path(name: &str) -> Option<String> {
   if let Ok(output) = cmd.output() {
     if !output.stdout.is_empty() {
       // output would be "-L/path/to/library\n"
-      let len = output.stdout.len();
-      let word = output.stdout[2..len - 1].to_vec();
-      return Some(String::from_utf8_lossy(&word).to_string());
+      let word = output.stdout[2..].to_vec();
+      return Some(String::from_utf8_lossy(&word).trim().to_string());
     } else {
       return None;
     }
