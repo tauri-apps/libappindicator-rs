@@ -1,5 +1,10 @@
 # Changelog
 
+## \[0.7.1]
+
+- Load the library dynamically.
+  - [3b44230](https://github.com/tauri-apps/javascriptcore-rs/commit/3b442309396ab56f1ca4a2fb54477e8351e06f3f) Add change file and fmt on 2022-05-27
+
 ## \[0.7.0]
 
 - Update to gtk 0.15
