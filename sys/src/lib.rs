@@ -4,10 +4,41 @@
 
 use gtk_sys::{
   GtkContainer, GtkContainerPrivate, GtkMenu, GtkMenuPrivate, GtkMenuShell, GtkMenuShellPrivate,
-  GtkStatusIcon, GtkStatusIconPrivate, GtkWidget, GtkWidgetPrivate,
+  GtkStatusIconPrivate, GtkWidget, GtkWidgetPrivate,
 };
+use libloading::*;
+use once_cell::sync::Lazy;
+use std::{os::raw::*, process::Command};
 
-use std::os::raw::*;
+pub static LIB: Lazy<Library> = Lazy::new(|| {
+  // PKG_CONFIG_ALLOW_SYSTEM_LIBS=1 pkg-config --libs-only-L ayatana-appindicator3-0.1
+  let path = match get_path("ayatana-appindicator3-0.1") {
+    Some(p) => format!("{}/libayatana-appindicator3.so", p),
+    None => match get_path("appindicator3-0.1") {
+      Some(p) => format!("{}/libappindicator3.so", p),
+      None => panic!("Can't detect any appindicator library"),
+    },
+  };
+  unsafe { Library::new(path).unwrap() }
+});
+
+fn get_path(name: &str) -> Option<String> {
+  let mut cmd = Command::new("pkg-config");
+  cmd.env("PKG_CONFIG_ALLOW_SYSTEM_LIBS", "1");
+  cmd.arg("--libs-only-L");
+  cmd.arg(name);
+  if let Ok(output) = cmd.output() {
+    if !output.stdout.is_empty() {
+      // output would be "-L/path/to/library\n"
+      let word = output.stdout[2..].to_vec();
+      return Some(String::from_utf8_lossy(&word).trim().to_string());
+    } else {
+      return None;
+    }
+  } else {
+    return None;
+  }
+}
 
 pub type guint32 = c_uint;
 pub type gint64 = c_long;
@@ -483,9 +514,7 @@ fn bindgen_test_layout__GParamSpec() {
   );
 }
 pub type GObject = _GObject;
-pub type GObjectClass = _GObjectClass;
 pub type GInitiallyUnowned = _GObject;
-pub type GObjectConstructParam = _GObjectConstructParam;
 #[doc = " GObject:"]
 #[doc = ""]
 #[doc = " All the fields in the GObject structure are private"]
@@ -537,286 +566,6 @@ fn bindgen_test_layout__GObject() {
       stringify!(_GObject),
       "::",
       stringify!(qdata)
-    )
-  );
-}
-#[doc = " GObjectClass:"]
-#[doc = " @g_type_class: the parent class"]
-#[doc = " @constructor: the @constructor function is called by g_object_new () to"]
-#[doc = "  complete the object initialization after all the construction properties are"]
-#[doc = "  set. The first thing a @constructor implementation must do is chain up to the"]
-#[doc = "  @constructor of the parent class. Overriding @constructor should be rarely"]
-#[doc = "  needed, e.g. to handle construct properties, or to implement singletons."]
-#[doc = " @set_property: the generic setter for all properties of this type. Should be"]
-#[doc = "  overridden for every type with properties. If implementations of"]
-#[doc = "  @set_property don't emit property change notification explicitly, this will"]
-#[doc = "  be done implicitly by the type system. However, if the notify signal is"]
-#[doc = "  emitted explicitly, the type system will not emit it a second time."]
-#[doc = " @get_property: the generic getter for all properties of this type. Should be"]
-#[doc = "  overridden for every type with properties."]
-#[doc = " @dispose: the @dispose function is supposed to drop all references to other"]
-#[doc = "  objects, but keep the instance otherwise intact, so that client method"]
-#[doc = "  invocations still work. It may be run multiple times (due to reference"]
-#[doc = "  loops). Before returning, @dispose should chain up to the @dispose method"]
-#[doc = "  of the parent class."]
-#[doc = " @finalize: instance finalization function, should finish the finalization of"]
-#[doc = "  the instance begun in @dispose and chain up to the @finalize method of the"]
-#[doc = "  parent class."]
-#[doc = " @dispatch_properties_changed: emits property change notification for a bunch"]
-#[doc = "  of properties. Overriding @dispatch_properties_changed should be rarely"]
-#[doc = "  needed."]
-#[doc = " @notify: the class closure for the notify signal"]
-#[doc = " @constructed: the @constructed function is called by g_object_new() as the"]
-#[doc = "  final step of the object creation process.  At the point of the call, all"]
-#[doc = "  construction properties have been set on the object.  The purpose of this"]
-#[doc = "  call is to allow for object initialisation steps that can only be performed"]
-#[doc = "  after construction properties have been set.  @constructed implementors"]
-#[doc = "  should chain up to the @constructed call of their parent class to allow it"]
-#[doc = "  to complete its initialisation."]
-#[doc = ""]
-#[doc = " The class structure for the GObject type."]
-#[doc = ""]
-#[doc = " |[<!-- language=\"C\" -->"]
-#[doc = " // Example of implementing a singleton using a constructor."]
-#[doc = " static MySingleton *the_singleton = NULL;"]
-#[doc = ""]
-#[doc = " static GObject*"]
-#[doc = " my_singleton_constructor (GType                  type,"]
-#[doc = "                           guint                  n_construct_params,"]
-#[doc = "                           GObjectConstructParam *construct_params)"]
-#[doc = " {"]
-#[doc = "   GObject *object;"]
-#[doc = ""]
-#[doc = "   if (!the_singleton)"]
-#[doc = "     {"]
-#[doc = "       object = G_OBJECT_CLASS (parent_class)->constructor (type,"]
-#[doc = "                                                            n_construct_params,"]
-#[doc = "                                                            construct_params);"]
-#[doc = "       the_singleton = MY_SINGLETON (object);"]
-#[doc = "     }"]
-#[doc = "   else"]
-#[doc = "     object = g_object_ref (G_OBJECT (the_singleton));"]
-#[doc = ""]
-#[doc = "   return object;"]
-#[doc = " }"]
-#[doc = " ]|"]
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct _GObjectClass {
-  pub g_type_class: GTypeClass,
-  pub construct_properties: *mut GSList,
-  pub constructor: ::std::option::Option<
-    unsafe extern "C" fn(
-      type_: GType,
-      n_construct_properties: guint,
-      construct_properties: *mut GObjectConstructParam,
-    ) -> *mut GObject,
-  >,
-  pub set_property: ::std::option::Option<
-    unsafe extern "C" fn(
-      object: *mut GObject,
-      property_id: guint,
-      value: *const GValue,
-      pspec: *mut GParamSpec,
-    ),
-  >,
-  pub get_property: ::std::option::Option<
-    unsafe extern "C" fn(
-      object: *mut GObject,
-      property_id: guint,
-      value: *mut GValue,
-      pspec: *mut GParamSpec,
-    ),
-  >,
-  pub dispose: ::std::option::Option<unsafe extern "C" fn(object: *mut GObject)>,
-  pub finalize: ::std::option::Option<unsafe extern "C" fn(object: *mut GObject)>,
-  pub dispatch_properties_changed: ::std::option::Option<
-    unsafe extern "C" fn(object: *mut GObject, n_pspecs: guint, pspecs: *mut *mut GParamSpec),
-  >,
-  pub notify:
-    ::std::option::Option<unsafe extern "C" fn(object: *mut GObject, pspec: *mut GParamSpec)>,
-  pub constructed: ::std::option::Option<unsafe extern "C" fn(object: *mut GObject)>,
-  pub flags: gsize,
-  pub pdummy: [gpointer; 6usize],
-}
-#[test]
-fn bindgen_test_layout__GObjectClass() {
-  assert_eq!(
-    ::std::mem::size_of::<_GObjectClass>(),
-    136usize,
-    concat!("Size of: ", stringify!(_GObjectClass))
-  );
-  assert_eq!(
-    ::std::mem::align_of::<_GObjectClass>(),
-    8usize,
-    concat!("Alignment of ", stringify!(_GObjectClass))
-  );
-  assert_eq!(
-    unsafe { &(*(::std::ptr::null::<_GObjectClass>())).g_type_class as *const _ as usize },
-    0usize,
-    concat!(
-      "Offset of field: ",
-      stringify!(_GObjectClass),
-      "::",
-      stringify!(g_type_class)
-    )
-  );
-  assert_eq!(
-    unsafe { &(*(::std::ptr::null::<_GObjectClass>())).construct_properties as *const _ as usize },
-    8usize,
-    concat!(
-      "Offset of field: ",
-      stringify!(_GObjectClass),
-      "::",
-      stringify!(construct_properties)
-    )
-  );
-  assert_eq!(
-    unsafe { &(*(::std::ptr::null::<_GObjectClass>())).constructor as *const _ as usize },
-    16usize,
-    concat!(
-      "Offset of field: ",
-      stringify!(_GObjectClass),
-      "::",
-      stringify!(constructor)
-    )
-  );
-  assert_eq!(
-    unsafe { &(*(::std::ptr::null::<_GObjectClass>())).set_property as *const _ as usize },
-    24usize,
-    concat!(
-      "Offset of field: ",
-      stringify!(_GObjectClass),
-      "::",
-      stringify!(set_property)
-    )
-  );
-  assert_eq!(
-    unsafe { &(*(::std::ptr::null::<_GObjectClass>())).get_property as *const _ as usize },
-    32usize,
-    concat!(
-      "Offset of field: ",
-      stringify!(_GObjectClass),
-      "::",
-      stringify!(get_property)
-    )
-  );
-  assert_eq!(
-    unsafe { &(*(::std::ptr::null::<_GObjectClass>())).dispose as *const _ as usize },
-    40usize,
-    concat!(
-      "Offset of field: ",
-      stringify!(_GObjectClass),
-      "::",
-      stringify!(dispose)
-    )
-  );
-  assert_eq!(
-    unsafe { &(*(::std::ptr::null::<_GObjectClass>())).finalize as *const _ as usize },
-    48usize,
-    concat!(
-      "Offset of field: ",
-      stringify!(_GObjectClass),
-      "::",
-      stringify!(finalize)
-    )
-  );
-  assert_eq!(
-    unsafe {
-      &(*(::std::ptr::null::<_GObjectClass>())).dispatch_properties_changed as *const _ as usize
-    },
-    56usize,
-    concat!(
-      "Offset of field: ",
-      stringify!(_GObjectClass),
-      "::",
-      stringify!(dispatch_properties_changed)
-    )
-  );
-  assert_eq!(
-    unsafe { &(*(::std::ptr::null::<_GObjectClass>())).notify as *const _ as usize },
-    64usize,
-    concat!(
-      "Offset of field: ",
-      stringify!(_GObjectClass),
-      "::",
-      stringify!(notify)
-    )
-  );
-  assert_eq!(
-    unsafe { &(*(::std::ptr::null::<_GObjectClass>())).constructed as *const _ as usize },
-    72usize,
-    concat!(
-      "Offset of field: ",
-      stringify!(_GObjectClass),
-      "::",
-      stringify!(constructed)
-    )
-  );
-  assert_eq!(
-    unsafe { &(*(::std::ptr::null::<_GObjectClass>())).flags as *const _ as usize },
-    80usize,
-    concat!(
-      "Offset of field: ",
-      stringify!(_GObjectClass),
-      "::",
-      stringify!(flags)
-    )
-  );
-  assert_eq!(
-    unsafe { &(*(::std::ptr::null::<_GObjectClass>())).pdummy as *const _ as usize },
-    88usize,
-    concat!(
-      "Offset of field: ",
-      stringify!(_GObjectClass),
-      "::",
-      stringify!(pdummy)
-    )
-  );
-}
-#[doc = " GObjectConstructParam:"]
-#[doc = " @pspec: the #GParamSpec of the construct parameter"]
-#[doc = " @value: the value to set the parameter to"]
-#[doc = ""]
-#[doc = " The GObjectConstructParam struct is an auxiliary"]
-#[doc = " structure used to hand #GParamSpec/#GValue pairs to the @constructor of"]
-#[doc = " a #GObjectClass."]
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct _GObjectConstructParam {
-  pub pspec: *mut GParamSpec,
-  pub value: *mut GValue,
-}
-#[test]
-fn bindgen_test_layout__GObjectConstructParam() {
-  assert_eq!(
-    ::std::mem::size_of::<_GObjectConstructParam>(),
-    16usize,
-    concat!("Size of: ", stringify!(_GObjectConstructParam))
-  );
-  assert_eq!(
-    ::std::mem::align_of::<_GObjectConstructParam>(),
-    8usize,
-    concat!("Alignment of ", stringify!(_GObjectConstructParam))
-  );
-  assert_eq!(
-    unsafe { &(*(::std::ptr::null::<_GObjectConstructParam>())).pspec as *const _ as usize },
-    0usize,
-    concat!(
-      "Offset of field: ",
-      stringify!(_GObjectConstructParam),
-      "::",
-      stringify!(pspec)
-    )
-  );
-  assert_eq!(
-    unsafe { &(*(::std::ptr::null::<_GObjectConstructParam>())).value as *const _ as usize },
-    8usize,
-    concat!(
-      "Offset of field: ",
-      stringify!(_GObjectConstructParam),
-      "::",
-      stringify!(value)
     )
   );
 }
@@ -1081,289 +830,12 @@ pub const AppIndicatorStatus_APP_INDICATOR_STATUS_ATTENTION: AppIndicatorStatus 
 #[doc = " shown by setting it to @APP_INDICATOR_STATUS_ACTIVE."]
 pub type AppIndicatorStatus = u32;
 pub type AppIndicator = _AppIndicator;
-pub type AppIndicatorClass = _AppIndicatorClass;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _AppIndicatorPrivate {
   _unused: [u8; 0],
 }
 pub type AppIndicatorPrivate = _AppIndicatorPrivate;
-#[doc = " AppIndicatorClass:"]
-#[doc = " @parent_class: Mia familia"]
-#[doc = " @new_icon: Slot for #AppIndicator::new-icon."]
-#[doc = " @new_attention_icon: Slot for #AppIndicator::new-attention-icon."]
-#[doc = " @new_status: Slot for #AppIndicator::new-status."]
-#[doc = " @new_icon_theme_path: Slot for #AppIndicator::new-icon-theme-path"]
-#[doc = " @new_label: Slot for #AppIndicator::new-label."]
-#[doc = " @connection_changed: Slot for #AppIndicator::connection-changed."]
-#[doc = " @scroll_event: Slot for #AppIndicator::scroll-event"]
-#[doc = " @app_indicator_reserved_ats: Reserved for future use."]
-#[doc = " @fallback: Function that gets called to make a #GtkStatusIcon when"]
-#[doc = "            there is no Application Indicator area available."]
-#[doc = " @unfallback: The function that gets called if an Application"]
-#[doc = "              Indicator area appears after the fallback has been created."]
-#[doc = " @app_indicator_reserved_1: Reserved for future use."]
-#[doc = " @app_indicator_reserved_2: Reserved for future use."]
-#[doc = " @app_indicator_reserved_3: Reserved for future use."]
-#[doc = " @app_indicator_reserved_4: Reserved for future use."]
-#[doc = " @app_indicator_reserved_5: Reserved for future use."]
-#[doc = " @app_indicator_reserved_6: Reserved for future use."]
-#[doc = ""]
-#[doc = " The signals and external functions that make up the #AppIndicator"]
-#[doc = " class object."]
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct _AppIndicatorClass {
-  pub parent_class: GObjectClass,
-  pub new_icon:
-    ::std::option::Option<unsafe extern "C" fn(indicator: *mut AppIndicator, user_data: gpointer)>,
-  pub new_attention_icon:
-    ::std::option::Option<unsafe extern "C" fn(indicator: *mut AppIndicator, user_data: gpointer)>,
-  pub new_status: ::std::option::Option<
-    unsafe extern "C" fn(indicator: *mut AppIndicator, status: *const gchar, user_data: gpointer),
-  >,
-  pub new_icon_theme_path: ::std::option::Option<
-    unsafe extern "C" fn(
-      indicator: *mut AppIndicator,
-      icon_theme_path: *const gchar,
-      user_data: gpointer,
-    ),
-  >,
-  pub new_label: ::std::option::Option<
-    unsafe extern "C" fn(
-      indicator: *mut AppIndicator,
-      label: *const gchar,
-      guide: *const gchar,
-      user_data: gpointer,
-    ),
-  >,
-  pub connection_changed: ::std::option::Option<
-    unsafe extern "C" fn(indicator: *mut AppIndicator, connected: gboolean, user_data: gpointer),
-  >,
-  pub scroll_event: ::std::option::Option<
-    unsafe extern "C" fn(
-      indicator: *mut AppIndicator,
-      delta: gint,
-      direction: GdkScrollDirection,
-      user_data: gpointer,
-    ),
-  >,
-  pub app_indicator_reserved_ats: ::std::option::Option<unsafe extern "C" fn()>,
-  pub fallback:
-    ::std::option::Option<unsafe extern "C" fn(indicator: *mut AppIndicator) -> *mut GtkStatusIcon>,
-  pub unfallback: ::std::option::Option<
-    unsafe extern "C" fn(indicator: *mut AppIndicator, status_icon: *mut GtkStatusIcon),
-  >,
-  pub app_indicator_reserved_1: ::std::option::Option<unsafe extern "C" fn()>,
-  pub app_indicator_reserved_2: ::std::option::Option<unsafe extern "C" fn()>,
-  pub app_indicator_reserved_3: ::std::option::Option<unsafe extern "C" fn()>,
-  pub app_indicator_reserved_4: ::std::option::Option<unsafe extern "C" fn()>,
-  pub app_indicator_reserved_5: ::std::option::Option<unsafe extern "C" fn()>,
-  pub app_indicator_reserved_6: ::std::option::Option<unsafe extern "C" fn()>,
-}
-#[test]
-fn bindgen_test_layout__AppIndicatorClass() {
-  assert_eq!(
-    ::std::mem::size_of::<_AppIndicatorClass>(),
-    264usize,
-    concat!("Size of: ", stringify!(_AppIndicatorClass))
-  );
-  assert_eq!(
-    ::std::mem::align_of::<_AppIndicatorClass>(),
-    8usize,
-    concat!("Alignment of ", stringify!(_AppIndicatorClass))
-  );
-  assert_eq!(
-    unsafe { &(*(::std::ptr::null::<_AppIndicatorClass>())).parent_class as *const _ as usize },
-    0usize,
-    concat!(
-      "Offset of field: ",
-      stringify!(_AppIndicatorClass),
-      "::",
-      stringify!(parent_class)
-    )
-  );
-  assert_eq!(
-    unsafe { &(*(::std::ptr::null::<_AppIndicatorClass>())).new_icon as *const _ as usize },
-    136usize,
-    concat!(
-      "Offset of field: ",
-      stringify!(_AppIndicatorClass),
-      "::",
-      stringify!(new_icon)
-    )
-  );
-  assert_eq!(
-    unsafe {
-      &(*(::std::ptr::null::<_AppIndicatorClass>())).new_attention_icon as *const _ as usize
-    },
-    144usize,
-    concat!(
-      "Offset of field: ",
-      stringify!(_AppIndicatorClass),
-      "::",
-      stringify!(new_attention_icon)
-    )
-  );
-  assert_eq!(
-    unsafe { &(*(::std::ptr::null::<_AppIndicatorClass>())).new_status as *const _ as usize },
-    152usize,
-    concat!(
-      "Offset of field: ",
-      stringify!(_AppIndicatorClass),
-      "::",
-      stringify!(new_status)
-    )
-  );
-  assert_eq!(
-    unsafe {
-      &(*(::std::ptr::null::<_AppIndicatorClass>())).new_icon_theme_path as *const _ as usize
-    },
-    160usize,
-    concat!(
-      "Offset of field: ",
-      stringify!(_AppIndicatorClass),
-      "::",
-      stringify!(new_icon_theme_path)
-    )
-  );
-  assert_eq!(
-    unsafe { &(*(::std::ptr::null::<_AppIndicatorClass>())).new_label as *const _ as usize },
-    168usize,
-    concat!(
-      "Offset of field: ",
-      stringify!(_AppIndicatorClass),
-      "::",
-      stringify!(new_label)
-    )
-  );
-  assert_eq!(
-    unsafe {
-      &(*(::std::ptr::null::<_AppIndicatorClass>())).connection_changed as *const _ as usize
-    },
-    176usize,
-    concat!(
-      "Offset of field: ",
-      stringify!(_AppIndicatorClass),
-      "::",
-      stringify!(connection_changed)
-    )
-  );
-  assert_eq!(
-    unsafe { &(*(::std::ptr::null::<_AppIndicatorClass>())).scroll_event as *const _ as usize },
-    184usize,
-    concat!(
-      "Offset of field: ",
-      stringify!(_AppIndicatorClass),
-      "::",
-      stringify!(scroll_event)
-    )
-  );
-  assert_eq!(
-    unsafe {
-      &(*(::std::ptr::null::<_AppIndicatorClass>())).app_indicator_reserved_ats as *const _ as usize
-    },
-    192usize,
-    concat!(
-      "Offset of field: ",
-      stringify!(_AppIndicatorClass),
-      "::",
-      stringify!(app_indicator_reserved_ats)
-    )
-  );
-  assert_eq!(
-    unsafe { &(*(::std::ptr::null::<_AppIndicatorClass>())).fallback as *const _ as usize },
-    200usize,
-    concat!(
-      "Offset of field: ",
-      stringify!(_AppIndicatorClass),
-      "::",
-      stringify!(fallback)
-    )
-  );
-  assert_eq!(
-    unsafe { &(*(::std::ptr::null::<_AppIndicatorClass>())).unfallback as *const _ as usize },
-    208usize,
-    concat!(
-      "Offset of field: ",
-      stringify!(_AppIndicatorClass),
-      "::",
-      stringify!(unfallback)
-    )
-  );
-  assert_eq!(
-    unsafe {
-      &(*(::std::ptr::null::<_AppIndicatorClass>())).app_indicator_reserved_1 as *const _ as usize
-    },
-    216usize,
-    concat!(
-      "Offset of field: ",
-      stringify!(_AppIndicatorClass),
-      "::",
-      stringify!(app_indicator_reserved_1)
-    )
-  );
-  assert_eq!(
-    unsafe {
-      &(*(::std::ptr::null::<_AppIndicatorClass>())).app_indicator_reserved_2 as *const _ as usize
-    },
-    224usize,
-    concat!(
-      "Offset of field: ",
-      stringify!(_AppIndicatorClass),
-      "::",
-      stringify!(app_indicator_reserved_2)
-    )
-  );
-  assert_eq!(
-    unsafe {
-      &(*(::std::ptr::null::<_AppIndicatorClass>())).app_indicator_reserved_3 as *const _ as usize
-    },
-    232usize,
-    concat!(
-      "Offset of field: ",
-      stringify!(_AppIndicatorClass),
-      "::",
-      stringify!(app_indicator_reserved_3)
-    )
-  );
-  assert_eq!(
-    unsafe {
-      &(*(::std::ptr::null::<_AppIndicatorClass>())).app_indicator_reserved_4 as *const _ as usize
-    },
-    240usize,
-    concat!(
-      "Offset of field: ",
-      stringify!(_AppIndicatorClass),
-      "::",
-      stringify!(app_indicator_reserved_4)
-    )
-  );
-  assert_eq!(
-    unsafe {
-      &(*(::std::ptr::null::<_AppIndicatorClass>())).app_indicator_reserved_5 as *const _ as usize
-    },
-    248usize,
-    concat!(
-      "Offset of field: ",
-      stringify!(_AppIndicatorClass),
-      "::",
-      stringify!(app_indicator_reserved_5)
-    )
-  );
-  assert_eq!(
-    unsafe {
-      &(*(::std::ptr::null::<_AppIndicatorClass>())).app_indicator_reserved_6 as *const _ as usize
-    },
-    256usize,
-    concat!(
-      "Offset of field: ",
-      stringify!(_AppIndicatorClass),
-      "::",
-      stringify!(app_indicator_reserved_6)
-    )
-  );
-}
 #[doc = " AppIndicator:"]
 #[doc = ""]
 #[doc = " A application indicator represents the values that are needed to show a"]
@@ -1413,118 +885,333 @@ fn bindgen_test_layout__AppIndicator() {
     )
   );
 }
-extern "C" {
-  pub fn app_indicator_get_type() -> GType;
+
+pub unsafe fn app_indicator_get_type() -> GType {
+  let f = LIB
+    .get::<unsafe extern "C" fn() -> GType>(b"app_indicator_get_type\0")
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f()
 }
-extern "C" {
-  pub fn app_indicator_new(
-    id: *const gchar,
-    icon_name: *const gchar,
-    category: AppIndicatorCategory,
-  ) -> *mut AppIndicator;
+
+// TODO use OnceCell to store symbols.
+pub unsafe fn app_indicator_new(
+  id: *const gchar,
+  icon_name: *const gchar,
+  category: AppIndicatorCategory,
+) -> *mut AppIndicator {
+  let f = LIB.get::<unsafe extern fn(*const gchar, *const gchar, AppIndicatorCategory) -> *mut AppIndicator>(b"app_indicator_new\0")
+        .expect("Can't get the extern function. This shouldn't happen unless the linked library is wrong.");
+  f(id, icon_name, category)
 }
-extern "C" {
-  pub fn app_indicator_new_with_path(
-    id: *const gchar,
-    icon_name: *const gchar,
-    category: AppIndicatorCategory,
-    icon_theme_path: *const gchar,
-  ) -> *mut AppIndicator;
+
+pub unsafe fn app_indicator_new_with_path(
+  id: *const gchar,
+  icon_name: *const gchar,
+  category: AppIndicatorCategory,
+  icon_theme_path: *const gchar,
+) -> *mut AppIndicator {
+  let f = LIB
+    .get::<unsafe extern "C" fn(
+      *const gchar,
+      *const gchar,
+      AppIndicatorCategory,
+      *const gchar,
+    ) -> *mut AppIndicator>(b"app_indicator_new_with_path\0")
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(id, icon_name, category, icon_theme_path)
 }
-extern "C" {
-  pub fn app_indicator_set_status(self_: *mut AppIndicator, status: AppIndicatorStatus);
+
+pub unsafe fn app_indicator_set_status(self_: *mut AppIndicator, status: AppIndicatorStatus) {
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator, AppIndicatorStatus)>(
+      b"app_indicator_set_status\0",
+    )
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_, status)
 }
-extern "C" {
-  pub fn app_indicator_set_attention_icon(self_: *mut AppIndicator, icon_name: *const gchar);
+
+pub unsafe fn app_indicator_set_attention_icon(self_: *mut AppIndicator, icon_name: *const gchar) {
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator, *const gchar)>(
+      b"app_indicator_set_attention_icon\0",
+    )
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_, icon_name)
 }
-extern "C" {
-  pub fn app_indicator_set_attention_icon_full(
-    self_: *mut AppIndicator,
-    icon_name: *const gchar,
-    icon_desc: *const gchar,
-  );
+
+pub unsafe fn app_indicator_set_attention_icon_full(
+  self_: *mut AppIndicator,
+  icon_name: *const gchar,
+  icon_desc: *const gchar,
+) {
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator, *const gchar, *const gchar)>(
+      b"app_indicator_set_attention_icon_full\0",
+    )
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_, icon_name, icon_desc)
 }
-extern "C" {
-  pub fn app_indicator_set_menu(self_: *mut AppIndicator, menu: *mut GtkMenu);
+
+pub unsafe fn app_indicator_set_menu(self_: *mut AppIndicator, menu: *mut GtkMenu) {
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator, *mut GtkMenu)>(b"app_indicator_set_menu\0")
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_, menu)
 }
-extern "C" {
-  pub fn app_indicator_set_icon(self_: *mut AppIndicator, icon_name: *const gchar);
+
+pub unsafe fn app_indicator_set_icon(self_: *mut AppIndicator, icon_name: *const gchar) {
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator, *const gchar)>(b"app_indicator_set_icon\0")
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_, icon_name)
 }
-extern "C" {
-  pub fn app_indicator_set_icon_full(
-    self_: *mut AppIndicator,
-    icon_name: *const gchar,
-    icon_desc: *const gchar,
-  );
+pub unsafe fn app_indicator_set_icon_full(
+  self_: *mut AppIndicator,
+  icon_name: *const gchar,
+  icon_desc: *const gchar,
+) {
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator, *const gchar, *const gchar)>(
+      b"app_indicator_set_icon_full\0",
+    )
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_, icon_name, icon_desc)
 }
-extern "C" {
-  pub fn app_indicator_set_label(
-    self_: *mut AppIndicator,
-    label: *const gchar,
-    guide: *const gchar,
-  );
+
+pub unsafe fn app_indicator_set_label(
+  self_: *mut AppIndicator,
+  label: *const gchar,
+  guide: *const gchar,
+) {
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator, *const gchar, *const gchar)>(
+      b"app_indicator_set_label\0",
+    )
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_, label, guide)
 }
-extern "C" {
-  pub fn app_indicator_set_icon_theme_path(self_: *mut AppIndicator, icon_theme_path: *const gchar);
+
+pub unsafe fn app_indicator_set_icon_theme_path(
+  self_: *mut AppIndicator,
+  icon_theme_path: *const gchar,
+) {
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator, *const gchar)>(
+      b"app_indicator_set_icon_theme_path\0",
+    )
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_, icon_theme_path)
 }
-extern "C" {
-  pub fn app_indicator_set_ordering_index(self_: *mut AppIndicator, ordering_index: guint32);
+
+pub unsafe fn app_indicator_set_ordering_index(self_: *mut AppIndicator, ordering_index: guint32) {
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator, guint32)>(b"app_indicator_set_ordering_index\0")
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_, ordering_index)
 }
-extern "C" {
-  pub fn app_indicator_set_secondary_activate_target(
-    self_: *mut AppIndicator,
-    menuitem: *mut GtkWidget,
-  );
+
+pub unsafe fn app_indicator_set_secondary_activate_target(
+  self_: *mut AppIndicator,
+  menuitem: *mut GtkWidget,
+) {
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator, *mut GtkWidget)>(
+      b"app_indicator_set_secondary_activate_target\0",
+    )
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_, menuitem)
 }
-extern "C" {
-  pub fn app_indicator_set_title(self_: *mut AppIndicator, title: *const gchar);
+
+pub unsafe fn app_indicator_set_title(self_: *mut AppIndicator, title: *const gchar) {
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator, *const gchar)>(b"app_indicator_set_title\0")
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_, title)
 }
-extern "C" {
-  pub fn app_indicator_get_id(self_: *mut AppIndicator) -> *const gchar;
+
+pub unsafe fn app_indicator_get_id(self_: *mut AppIndicator) -> *const gchar {
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator) -> *const gchar>(b"app_indicator_get_id\0")
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_)
 }
-extern "C" {
-  pub fn app_indicator_get_category(self_: *mut AppIndicator) -> AppIndicatorCategory;
+
+pub unsafe fn app_indicator_get_category(self_: *mut AppIndicator) -> AppIndicatorCategory {
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator) -> AppIndicatorCategory>(
+      b"app_indicator_get_category\0",
+    )
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_)
 }
-extern "C" {
-  pub fn app_indicator_get_status(self_: *mut AppIndicator) -> AppIndicatorStatus;
+
+pub unsafe fn app_indicator_get_status(self_: *mut AppIndicator) -> AppIndicatorStatus {
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator) -> AppIndicatorStatus>(
+      b"app_indicator_get_status\0",
+    )
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_)
 }
-extern "C" {
-  pub fn app_indicator_get_icon(self_: *mut AppIndicator) -> *const gchar;
+
+pub unsafe fn app_indicator_get_icon(self_: *mut AppIndicator) -> *const gchar {
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator) -> *const gchar>(b"app_indicator_get_icon\0")
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_)
 }
-extern "C" {
-  pub fn app_indicator_get_icon_desc(self_: *mut AppIndicator) -> *const gchar;
+
+pub unsafe fn app_indicator_get_icon_desc(self_: *mut AppIndicator) -> *const gchar {
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator) -> *const gchar>(
+      b"app_indicator_get_icon_desc\0",
+    )
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_)
 }
-extern "C" {
-  pub fn app_indicator_get_icon_theme_path(self_: *mut AppIndicator) -> *const gchar;
+
+pub unsafe fn app_indicator_get_icon_theme_path(self_: *mut AppIndicator) -> *const gchar {
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator) -> *const gchar>(
+      b"app_indicator_get_icon_theme_path\0",
+    )
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_)
 }
-extern "C" {
-  pub fn app_indicator_get_attention_icon(self_: *mut AppIndicator) -> *const gchar;
+
+pub unsafe fn app_indicator_get_attention_icon(self_: *mut AppIndicator) -> *const gchar {
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator) -> *const gchar>(
+      b"app_indicator_get_attention_icon\0",
+    )
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_)
 }
-extern "C" {
-  pub fn app_indicator_get_attention_icon_desc(self_: *mut AppIndicator) -> *const gchar;
+
+pub unsafe fn app_indicator_get_attention_icon_desc(self_: *mut AppIndicator) -> *const gchar {
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator) -> *const gchar>(
+      b"app_indicator_get_attention_icon_desc\0",
+    )
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_)
 }
-extern "C" {
-  pub fn app_indicator_get_title(self_: *mut AppIndicator) -> *const gchar;
+
+pub unsafe fn app_indicator_get_title(self_: *mut AppIndicator) -> *const gchar {
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator) -> *const gchar>(b"app_indicator_get_title\0")
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_)
 }
-extern "C" {
-  pub fn app_indicator_get_menu(self_: *mut AppIndicator) -> *mut GtkMenu;
+
+pub unsafe fn app_indicator_get_menu(self_: *mut AppIndicator) -> *mut GtkMenu {
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator) -> *mut GtkMenu>(b"app_indicator_get_menu\0")
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_)
 }
-extern "C" {
-  pub fn app_indicator_get_label(self_: *mut AppIndicator) -> *const gchar;
+
+pub unsafe fn app_indicator_get_label(self_: *mut AppIndicator) -> *const gchar {
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator) -> *const gchar>(b"app_indicator_get_label\0")
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_)
 }
-extern "C" {
-  pub fn app_indicator_get_label_guide(self_: *mut AppIndicator) -> *const gchar;
+
+pub unsafe fn app_indicator_get_label_guide(self_: *mut AppIndicator) -> *const gchar {
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator) -> *const gchar>(
+      b"app_indicator_get_label_guide\0",
+    )
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_)
 }
-extern "C" {
-  pub fn app_indicator_get_ordering_index(self_: *mut AppIndicator) -> guint32;
+
+pub unsafe fn app_indicator_get_ordering_index(self_: *mut AppIndicator) -> guint32 {
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator) -> guint32>(
+      b"app_indicator_get_ordering_index\0",
+    )
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_)
 }
-extern "C" {
-  pub fn app_indicator_get_secondary_activate_target(self_: *mut AppIndicator) -> *mut GtkWidget;
+
+pub unsafe fn app_indicator_get_secondary_activate_target(
+  self_: *mut AppIndicator,
+) -> *mut GtkWidget {
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator) -> *mut GtkWidget>(
+      b"app_indicator_get_secondary_activate_target\0",
+    )
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_)
 }
-extern "C" {
-  pub fn app_indicator_build_menu_from_desktop(
-    self_: *mut AppIndicator,
-    desktop_file: *const gchar,
-    desktop_profile: *const gchar,
-  );
+
+pub unsafe fn app_indicator_build_menu_from_desktop(
+  self_: *mut AppIndicator,
+  desktop_file: *const gchar,
+  desktop_profile: *const gchar,
+) {
+  let f = LIB
+    .get::<unsafe extern "C" fn(*mut AppIndicator, *const gchar, *const gchar)>(
+      b"app_indicator_build_menu_from_desktop\0",
+    )
+    .expect(
+      "Can't get the extern function. This shouldn't happen unless the linked library is wrong.",
+    );
+  f(self_, desktop_file, desktop_profile)
 }
