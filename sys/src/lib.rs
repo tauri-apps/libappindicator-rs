@@ -8,7 +8,7 @@ use gtk_sys::{
 };
 use libloading::*;
 use once_cell::sync::Lazy;
-use std::{os::raw::*, process::Command};
+use std::{os::raw::*, path::PathBuf, process::Command};
 
 pub static LIB: Lazy<Library> = Lazy::new(|| {
   #[cfg(target_os = "linux")]
@@ -30,7 +30,7 @@ pub static LIB: Lazy<Library> = Lazy::new(|| {
         panic!("`APPDIR` environment variable found but this application was not detected as an AppImage; this might be a security issue.");
       }
 
-      let appimage_path = std::path::PathBuf::from(appimage_path);
+      let appimage_path = PathBuf::from(appimage_path);
       let ayatana_target_path = appimage_path.join("usr/lib/libayatana-appindicator3.so");
       let gtk_target_path = appimage_path.join("usr/lib/libappindicator3.so");
 
@@ -42,15 +42,20 @@ pub static LIB: Lazy<Library> = Lazy::new(|| {
     }
   }
   // PKG_CONFIG_ALLOW_SYSTEM_LIBS=1 pkg-config --libs-only-L ayatana-appindicator3-0.1
-  let path = match get_path("ayatana-appindicator3-0.1") {
-    Some(p) => format!("{}/libayatana-appindicator3.so", p),
-    None => match get_path("appindicator3-0.1") {
-      Some(p) => format!("{}/libappindicator3.so", p),
-      None => panic!("Can't detect any appindicator library"),
-    },
-  };
+  let path = get_library_path();
   unsafe { Library::new(path).unwrap() }
 });
+
+/// Gets the target appindicator library path.
+pub fn get_library_path() -> PathBuf {
+  match get_path("ayatana-appindicator3-0.1") {
+    Some(p) => format!("{}/libayatana-appindicator3.so", p).into(),
+    None => match get_path("appindicator3-0.1") {
+      Some(p) => format!("{}/libappindicator3.so", p).into(),
+      None => panic!("Can't detect any appindicator library"),
+    },
+  }
+}
 
 fn get_path(name: &str) -> Option<String> {
   let mut cmd = Command::new("pkg-config");
