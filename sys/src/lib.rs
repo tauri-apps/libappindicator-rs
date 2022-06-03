@@ -42,22 +42,23 @@ pub static LIB: Lazy<Library> = Lazy::new(|| {
     }
   }
   // PKG_CONFIG_ALLOW_SYSTEM_LIBS=1 pkg-config --libs-only-L ayatana-appindicator3-0.1
-  let path = get_library_path();
+  let path = get_appindicator_library_path();
   unsafe { Library::new(path).unwrap() }
 });
 
-/// Gets the target appindicator library path.
-pub fn get_library_path() -> PathBuf {
-  match get_path("ayatana-appindicator3-0.1") {
+/// Gets the path to the target appindicator library file (`.so` extension).
+pub fn get_appindicator_library_path() -> PathBuf {
+  match get_library_path("ayatana-appindicator3-0.1") {
     Some(p) => format!("{}/libayatana-appindicator3.so", p).into(),
-    None => match get_path("appindicator3-0.1") {
+    None => match get_library_path("appindicator3-0.1") {
       Some(p) => format!("{}/libappindicator3.so", p).into(),
       None => panic!("Can't detect any appindicator library"),
     },
   }
 }
 
-fn get_path(name: &str) -> Option<String> {
+/// Gets the folder in which a library is located using `pkg-config`.
+pub fn get_library_path(name: &str) -> Option<String> {
   let mut cmd = Command::new("pkg-config");
   cmd.env("PKG_CONFIG_ALLOW_SYSTEM_LIBS", "1");
   cmd.arg("--libs-only-L");
