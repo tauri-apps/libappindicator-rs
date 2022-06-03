@@ -11,6 +11,36 @@ use once_cell::sync::Lazy;
 use std::{os::raw::*, process::Command};
 
 pub static LIB: Lazy<Library> = Lazy::new(|| {
+  #[cfg(target_os = "linux")]
+  {
+    if let Some(appimage_path) = std::env::var_os("APPDIR") {
+      // validate that we're actually running on an AppImage
+      // an AppImage is mounted to `/$TEMPDIR/.mount_${appPrefix}${hash}`
+      // see https://github.com/AppImage/AppImageKit/blob/1681fd84dbe09c7d9b22e13cdb16ea601aa0ec47/src/runtime.c#L501
+      // note that it is safe to use `std::env::current_exe` here since we just loaded an AppImage.
+      let is_temp = std::env::current_exe()
+        .map(|p| {
+          p.display()
+            .to_string()
+            .starts_with(&format!("{}/.mount_", std::env::temp_dir().display()))
+        })
+        .unwrap_or(true);
+
+      if !is_temp {
+        panic!("`APPDIR` environment variable found but this application was not detected as an AppImage; this might be a security issue.");
+      }
+
+      let appimage_path = std::path::PathBuf::from(appimage_path);
+      let ayatana_target_path = appimage_path.join("usr/lib/libayatana-appindicator3.so");
+      let gtk_target_path = appimage_path.join("usr/lib/libappindicator3.so");
+
+      if ayatana_target_path.exists() {
+        return unsafe { Library::new(ayatana_target_path).unwrap() };
+      } else if gtk_target_path.exists() {
+        return unsafe { Library::new(gtk_target_path).unwrap() };
+      }
+    }
+  }
   // PKG_CONFIG_ALLOW_SYSTEM_LIBS=1 pkg-config --libs-only-L ayatana-appindicator3-0.1
   let path = match get_path("ayatana-appindicator3-0.1") {
     Some(p) => format!("{}/libayatana-appindicator3.so", p),
