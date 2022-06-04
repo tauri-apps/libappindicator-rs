@@ -1,5 +1,10 @@
 # Changelog
 
+## \[0.7.2]
+
+- Change the library loader to use the `APPDIR` environment variable if the running application is an AppImage file.
+  - [3ee8dc0](https://github.com/tauri-apps/javascriptcore-rs/commit/3ee8dc053e4a6027a215ad56dbf9fd4de758e297) fix(sys): use `APPDIR` environment variable when running as an appimage on 2022-06-03
+
 ## \[0.7.1]
 
 - Load the library dynamically.
