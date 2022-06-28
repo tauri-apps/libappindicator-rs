@@ -12,3 +12,7 @@ glib = "0.15"
 gtk = "0.15"
 gtk-sys = "0.15"
 libappindicator-sys = { version = "0.7", path = "sys/" }
+
+[features]
+default = [ "backcompat" ]
+backcompat = [ "libappindicator-sys/backcompat" ]

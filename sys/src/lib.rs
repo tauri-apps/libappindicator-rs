@@ -21,8 +21,34 @@ pub static LIB: Lazy<Library> = Lazy::new(|| {
     return lib;
   }
 
+  // Versions v0.7.1 and v0.7.2 relied exclusively on the .so files without .1 suffix.
+  // This is 'bad' because by convention that signals we don't care about ABI compatibility.
+  // However in weird cases (*ahum* Tauri bundled appimages) this .so file is the only one
+  // available. Using this feature flag allows them some time to fix this problem and bundle
+  // with the correct filename.
+  #[cfg(feature = "backcompat")]
+  {
+    let libayatana_compat = unsafe { Library::new("libayatana-appindicator3.so") };
+    if let Ok(lib) = libayatana_compat {
+      return lib;
+    }
+
+    let libappindicator_compat = unsafe { Library::new("libappindicator3.so") };
+    if let Ok(lib) = libappindicator_compat {
+      return lib;
+    }
+
+    panic!(
+      "Failed to load ayatana-appindicator3 or appindicator3 dynamic library\n{}\n{}\n{}\n{}",
+      libayatana.unwrap_err(),
+      libappindicator.unwrap_err(),
+      libayatana_compat.unwrap_err(),
+      libappindicator_compat.unwrap_err(),
+    );
+  }
+
   panic!(
-    "Failed to load libayatana-appindicator3.so.1 or libappindicator3.so.1\n{}\n{}",
+    "Failed to load ayatana-appindicator3 or appindicator3 dynamic library\n{}\n{}",
     libayatana.unwrap_err(),
     libappindicator.unwrap_err()
   );
