@@ -1,7 +1,7 @@
 
 ---
-"libappindicator": minor
-"libappindicator-sys": minor
+"libappindicator": patch
+"libappindicator-sys": patch
 ---
 
 Load exclusively using dynamic linking
