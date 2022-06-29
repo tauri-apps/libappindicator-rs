@@ -1,5 +1,5 @@
 {
-  "gitSiteUrl": "https://github.com/tauri-apps/javascriptcore-rs/",
+  "gitSiteUrl": "https://github.com/tauri-apps/libappindicator-rs/",
   "timeout": 3600000,
   "additionalBumpTypes": ["housekeeping"],
   "pkgManagers": {
