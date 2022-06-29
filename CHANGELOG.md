@@ -1,5 +1,19 @@
 # 0.5.2 (2020-07-14)
 
+## \[0.7.1]
+
+- Load exclusively using dynamic linking
+
+This change lets `dlopen` (through `ld.so`) handle what paths to search in for the respective libraries.
+Additionally this fixes a mistake with the library filenames. Now using the `SONAME` instead of a symlinked name that happened to work when dev packages are installed.
+
+**Breaking:** Support for `$APPDIR` based appImage detection is removed.
+Though it *should* still work, because appimages provide an `LD_LIBRARY_PATH` that would be equivalent to what our previous detection method was doing in rust.
+
+- [bb8d280](https://github.com/tauri-apps/libappindicator-rs/commit/bb8d2806b028c5b19c89f126624c85746fca9d7d) Add changes on 2022-06-27
+- [aae5895](https://github.com/tauri-apps/libappindicator-rs/commit/aae5895ae389fc2c8a9542a1b630f36e22bcc582) Add a backcompat feature flag on 2022-06-28
+- [7f96c33](https://github.com/tauri-apps/libappindicator-rs/commit/7f96c33637886e16082758c9e37a1ee6513ccbd2) fix(covector): change bump to patch on 2022-06-28
+
 ## \[0.7.0]
 
 - Update to gtk 0.15
