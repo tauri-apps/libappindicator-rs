@@ -8,7 +8,7 @@ edition = "2018"
 categories = [ "external-ffi-bindings" ]
 
 [dependencies]
-gtk-sys = "0.15"
+gtk-sys = "0.16"
 libloading = "0.7"
 once_cell = "1.12"
 

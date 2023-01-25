@@ -8,9 +8,9 @@ keywords = [ "linux", "gui", "gtk" ]
 
 [dependencies]
 log = "0.4"
-glib = "0.15"
-gtk = "0.15"
-gtk-sys = "0.15"
+glib = "0.16"
+gtk = "0.16"
+gtk-sys = "0.16"
 libappindicator-sys = { version = "0.7", path = "sys/" }
 
 [features]
