@@ -1,5 +1,10 @@
 # 0.5.2 (2020-07-14)
 
+## \[0.8.0]
+
+- Bump gtk vesion: 0.15 -> 0.16
+  - [f834d40](https://github.com/tauri-apps/libappindicator-rs/commit/f834d403fb44125d20f9c6f8f9a8d54aedef4451) chore: add changelog on 2023-01-25
+
 ## \[0.7.1]
 
 - Load exclusively using dynamic linking
