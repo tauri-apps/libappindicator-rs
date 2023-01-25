@@ -11,7 +11,7 @@ log = "0.4"
 glib = "0.16"
 gtk = "0.16"
 gtk-sys = "0.16"
-libappindicator-sys = { version = "0.7", path = "sys/" }
+libappindicator-sys = { version = "0.8", path = "sys/" }
 
 [features]
 default = [ "backcompat" ]
