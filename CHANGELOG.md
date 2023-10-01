@@ -1,5 +1,11 @@
 # 0.5.2 (2020-07-14)
 
+## \[0.9.0]
+
+- [`d07334b`](https://github.com/tauri-apps/libappindicator-rs/commit/d07334b2378b137505bbdd706c23803073483e2c) Update gtk to 0.18.
+
+  Increase MSRV to 1.70.0.
+
 ## \[0.8.0]
 
 - Bump gtk vesion: 0.15 -> 0.16
