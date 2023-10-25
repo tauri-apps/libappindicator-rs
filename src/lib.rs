@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
 
-use glib::translate::ToGlibPtr;
+use gtk::glib::translate::ToGlibPtr;
 use libappindicator_sys::AppIndicator as AppIndicatorRaw;
 pub use libappindicator_sys::*;
 
