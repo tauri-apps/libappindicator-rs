@@ -1,36 +1,21 @@
 <!--
-Please make sure to read the Pull Request Guidelines:
-https://github.com/tauri-apps/tauri/blob/dev/.github/CONTRIBUTING.md#pull-request-guidelines
+Before submitting a PR, please read https://github.com/tauri-apps/tauri/blob/dev/.github/CONTRIBUTING.md#pull-request-guidelines
+
+1. Give the PR a descriptive title.
+
+  Examples of good title:
+    - fix: fix incorrect generated type
+    - docs: update docstrings
+    - feat: update bindings
+
+  Examples of bad title:
+    - fix #7123
+    - update docs
+    - fix bugs
+
+2. If there is a related issue, referenced in the PR text, e.g. closes #123.
+3. If this change requires a new version, then add a change file in `.changes` directory with the appropriate bump, see https://github.com/tauri-apps/libappindicator-rs/blob/dev/.changes/readme.md
+4. Ensure that all your commits are signed https://docs.github.com/en/authentication/managing-commit-signature-verification/signing-commits
+5. Ensure `cargo test` and `cargo clippy` passes.
+6. Open as a draft PR if your work is still in progress.
 -->
-
-<!-- PULL REQUEST TEMPLATE -->
-<!-- (Update "[ ]" to "[x]" to check a box) -->
-
-**What kind of change does this PR introduce?** (check at least one)
-
-- [ ] Bugfix
-- [ ] Feature
-- [ ] Code style update
-- [ ] Refactor
-- [ ] Documentation
-- [ ] Build-related changes
-- [ ] Other, please describe:
-
-**Does this PR introduce a breaking change?** (check one)
-<!--
-If yes, please describe the impact and migration path for existing applications in an attached issue. Filing a PR with breaking changes that has not been discussed and approved by the maintainers in an issue will be immediately closed.
--->
-
-- [ ] Yes. Issue #___
-- [ ] No
-
-
-**The PR fulfills these requirements:**
-
-- [ ] When resolving a specific issue, it's referenced in the PR's title (e.g. `fix: #xxx[,#xxx]`, where "xxx" is the issue number)
-- [ ] A change file is added if any packages will require a version bump due to this PR per [the instructions in the readme](https://github.com/tauri-apps/tauri/blob/dev/.changes/readme.md).
-
-If adding a **new feature**, the PR's description includes:
-- [ ] A convincing reason for adding this feature (to avoid wasting your time, it's best to open a suggestion issue first and wait for approval before working on it)
-
-**Other information:**
