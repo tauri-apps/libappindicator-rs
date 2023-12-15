@@ -4,9 +4,9 @@ Before submitting a PR, please read https://github.com/tauri-apps/tauri/blob/dev
 1. Give the PR a descriptive title.
 
   Examples of good title:
-    - fix(windows): fix race condition in event loop
+    - fix: fix incorrect generated type
     - docs: update docstrings
-    - feat: add `Window::set_fullscreen`
+    - feat: update bindings
 
   Examples of bad title:
     - fix #7123
