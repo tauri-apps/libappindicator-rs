@@ -7,8 +7,8 @@ use gtk_sys::{
   GtkStatusIconPrivate, GtkWidget, GtkWidgetPrivate,
 };
 use libloading::*;
-use std::sync::LazyLock;
 use std::os::raw::*;
+use std::sync::LazyLock;
 
 pub static LIB: LazyLock<Library> = LazyLock::new(|| {
   let libayatana = unsafe { Library::new("libayatana-appindicator3.so.1") };
