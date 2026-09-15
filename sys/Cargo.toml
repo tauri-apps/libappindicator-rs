@@ -9,7 +9,7 @@ categories = [ "external-ffi-bindings" ]
 
 [dependencies]
 gtk-sys = "0.19"
-libloading = "0.7"
+libloading = "0.9"
 once_cell = "1.12"
 
 [features]
