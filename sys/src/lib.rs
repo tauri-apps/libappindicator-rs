@@ -7,10 +7,10 @@ use gtk_sys::{
   GtkStatusIconPrivate, GtkWidget, GtkWidgetPrivate,
 };
 use libloading::*;
-use once_cell::sync::Lazy;
 use std::os::raw::*;
+use std::sync::LazyLock;
 
-pub static LIB: Lazy<Library> = Lazy::new(|| {
+pub static LIB: LazyLock<Library> = LazyLock::new(|| {
   let libayatana = unsafe { Library::new("libayatana-appindicator3.so.1") };
   if let Ok(lib) = libayatana {
     return lib;
