@@ -8,9 +8,8 @@ keywords = ["linux", "gui", "gtk"]
 rust-version = "1.92"
 
 [dependencies]
-log = "0.4"
 gtk = "0.19"
-libappindicator-sys = { version = "0.9", path = "sys/" }
+libappindicator-sys = { version = "0.10", path = "sys/" }
 
 [features]
 default = ["backcompat"]
