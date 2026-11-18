@@ -1,5 +1,9 @@
 # 0.5.2 (2020-07-14)
 
+## [0.10.0]
+
+- [`1fef6b3`](https://github.com/tauri-apps/libappindicator-rs/commit/1fef6b3b8cb4eb1bb3fd287f897826eb397c3165) ([#53](https://github.com/tauri-apps/libappindicator-rs/pull/53)) Update gtk crates to 0.19. Raised MSRV to 1.92.
+
 ## \[0.9.0]
 
 - [`d07334b`](https://github.com/tauri-apps/libappindicator-rs/commit/d07334b2378b137505bbdd706c23803073483e2c) Update gtk to 0.18.
