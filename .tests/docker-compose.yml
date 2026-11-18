@@ -1,0 +1,39 @@
+version: "3.8"
+services:
+
+  no-library:
+    environment: &env
+      RUST_BACKTRACE: 1
+      DISPLAY: ${DISPLAY}
+    volumes: &vol
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    build: &base-build
+      context: ..
+      dockerfile: .tests/Dockerfile
+      args:
+        build_cmd: cargo build --release --example=hello
+        with_lib:
+
+  libayatana:
+    environment: *env
+    volumes: *vol
+    build:
+      <<: *base-build
+      args:
+        with_lib: libayatana-appindicator3-1
+
+  libappindicator:
+    environment: *env
+    volumes: *vol
+    build:
+      <<: *base-build
+      args:
+        with_lib: libappindicator3-1
+
+  both-libs:
+    environment: *env
+    volumes: *vol
+    build:
+      <<: *base-build
+      args:
+        with_lib: libayatana-appindicator3-1 libappindicator3-1
